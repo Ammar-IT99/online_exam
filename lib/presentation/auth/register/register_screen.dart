@@ -4,6 +4,7 @@ import 'package:online_exam/presentation/auth/register/cubit/register_screen_vie
 import '../../../core/di.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
+import '../login/login_screen.dart';
 import 'cubit/states.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -168,7 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    // Navigate to login screen
+                  Navigator.pushNamed(context, LoginScreen.routeName);// Navigate to login screen
                   },
                   child: Text('Already have an account? Log in'),
                 ),
