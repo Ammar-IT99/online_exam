@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
 import '../../../core/di.dart';
 import '../../utlis/custome_text_form_feild.dart';
-import 'cubit/states.dart'; // Make sure to import the custom widget
+import '../../utlis/dialog_utlis.dart';
+import 'cubit/states.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,22 +24,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocListener(
       bloc: viewModel,
       listener: (context, state) {
+
         if (state is RegisterLoadingState) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          );
+          DialogUtlis.showLoadingDialog(context, message: 'Loading...');
         } else if (state is RegisterSuccessState) {
-          Navigator.of(context).pop(); // Dismiss the loading dialog
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.authResultEntity.userEntity?.username ?? "")));
+          DialogUtlis.hideLoadingDialog(context);
+          DialogUtlis.showMessageDialog(
+            context,
+            message: "Registration successful\n${state.authResultEntity.userEntity?.username}",
+            posButtonTitle: 'Ok',
+            posButtonAction: () {},
+          );
         } else if (state is RegisterErrorState) {
-          Navigator.of(context).pop(); // Dismiss the loading dialog
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          DialogUtlis.hideLoadingDialog(context);
+          DialogUtlis.showMessageDialog(
+            context,
+            message: '${state.errorMessage}"\nPlease try again',
+            posButtonTitle: 'OK',
+
+          );
         }
       },
       child: Scaffold(
@@ -71,7 +75,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your first name';
                           }
-
                           return null;
                         },
                       ),
@@ -85,7 +88,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your last name';
                           }
-
                           return null;
                         },
                       ),

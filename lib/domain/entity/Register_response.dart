@@ -12,6 +12,4 @@ class RegisterResponseEntity {
   String? token;
   UserEntity? user;
 
-
-
 }
