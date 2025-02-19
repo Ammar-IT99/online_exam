@@ -9,9 +9,18 @@ import '../../../domain/repository/repository_contract/auth_repository_contract.
 class AuthRepositoryImpl implements AuthRepositoryContract {
   AuthRemoteDataSource remoteDataSource;
   AuthRepositoryImpl({required this.remoteDataSource});
+  //register
   @override
   Future<Either<Failures, AuthResultEntity>> register(String userName, String firstName, String lastName, String email, String password, String rePassword, String phoneNumber) {
     return remoteDataSource.register(
         userName, firstName, lastName, email, password, rePassword, phoneNumber,);
+  }
+
+  //signIn
+  //register
+  @override
+  Future<Either<Failures, AuthResultEntity>> signIn(String email, String password,) {
+    return remoteDataSource.signIn(
+        email, password,);
   }
 }
