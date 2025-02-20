@@ -35,13 +35,46 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
+  http:
   flutter_bloc: ^9.0.0
   dartz: ^0.10.1
   injectable:
   get_it:
   connectivity_plus: ^6.1.3
-  flutter_launcher_icons: ^0.14.3
-  http:
+#   flutter_native_splash: ^2.4.5
+# flutter_native_splash:
+#   image: assets/online_exam_light.png
+#   image_dark: assets/online_exam_dark.png
+#   color: "#ffffff"
+#   color_dark: "#000000"
+#   android: true
+#   ios: true
+#   web: false
+#   android_12:
+#     image: assets/online_exam_light.png
+#     image_dark: assets/online_exam_dark.png
+#     color: "#ffffff"
+#     color_dark: "#000000"
+#   flutter_launcher_icons: ^0.14.3
+# flutter_launcher_icons:
+#   android: true
+#   ios: true
+#   remove_alpha_ios: true
+#   image_path: "assets/online_exam_logo.png"
+#   min_sdk_android: 21 # android min sdk min:16, default 21
+#   web:
+#     generate: true
+#     image_path: "assets/online_exam_logo.png"
+#     background_color: "#hexcode"
+#     theme_color: "#hexcode"
+#   windows:
+#     generate: true
+#     image_path: "assets/online_exam_logo.png"
+#     icon_size: 48 # min:48, max:256, default: 48
+#   macos:
+#     generate: true
+#     image_path: "assets/online_exam_logo.png"
+  
 
 
 dev_dependencies:
@@ -72,8 +105,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

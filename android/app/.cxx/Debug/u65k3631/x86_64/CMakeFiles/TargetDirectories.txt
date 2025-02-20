@@ -1,0 +1,2 @@
+H:/online_exam/android/app/.cxx/Debug/u65k3631/x86_64/CMakeFiles/edit_cache.dir
+H:/online_exam/android/app/.cxx/Debug/u65k3631/x86_64/CMakeFiles/rebuild_cache.dir
