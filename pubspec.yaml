@@ -40,6 +40,7 @@ dependencies:
   injectable:
   get_it:
   connectivity_plus: ^6.1.3
+  flutter_launcher_icons: ^0.14.3
   http:
 
 
