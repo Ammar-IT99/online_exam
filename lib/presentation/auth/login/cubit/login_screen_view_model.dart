@@ -1,36 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_exam/domain/use_case/signin_use_case.dart';
-import 'package:online_exam/presentation/auth/login/cubit/states.dart';
+import 'package:online_exam/domain/use_case/register_use_case.dart';
+import 'package:online_exam/presentation/auth/register/cubit/states.dart';
 
-class LoginScreenViewModel extends Cubit<LoginState> {
-  LoginScreenViewModel({required this.signInUseCase}) : super(SignInInitialState());
+import '../../../../data/api/api_result.dart';
+
+class RegisterScreenViewModel extends Cubit<RegisterState> {
+  RegisterScreenViewModel({required this.registerUseCase}) : super(RegisterInitialState());
 
   var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController(text: 'ampar133@1elevate.com');
-  var passwordController = TextEditingController(text: 'Elevate@123');
+  var userNameController = TextEditingController();
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+  var phoneNumberController = TextEditingController();
   bool obscurePassword = true;
 
-  final SignInUseCase signInUseCase;
+  final RegisterUseCase registerUseCase;
 
-  void signIn() async {
+  void register() async {
     if (formKey.currentState?.validate() != true) {
       return;
     }
 
-    emit(SignInLoadingState());
-    var either = await signInUseCase.invoke(
+    emit(RegisterLoadingState());
+    var result = await registerUseCase.invoke(
+        userNameController.text,
+        firstNameController.text,
+        lastNameController.text,
         emailController.text,
         passwordController.text,
+      confirmPasswordController.text,
+        phoneNumberController.text,
         );
+  switch (result) {
+    case Success(data: final authEntity):
+      emit(RegisterSuccessState(authResultEntity: authEntity));
+    case Failure(message: final error):
+      emit(RegisterErrorState(error));
 
-    either.fold(
-      (l) {
-        emit(SignInErrorState(l.errorMessage!));
-      },
-      (r) {
-        emit(SignInSuccessState(authResultEntity: r));
-      },
-    );
   }
+}
 }
