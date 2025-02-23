@@ -9,8 +9,8 @@ class LoginScreenViewModel extends Cubit<LoginState> {
   LoginScreenViewModel({required this.signInUseCase}) : super(SignInInitialState());
 
   var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController(text: 'ampar133@1elevate.com');
-  var passwordController = TextEditingController(text: 'Elevate@123');
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
   bool obscurePassword = true;
 
   final SignInUseCase signInUseCase;
