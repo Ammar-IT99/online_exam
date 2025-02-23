@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam/core/cache_network.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:online_exam/data/api/api_constant.dart';
 import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
-void main() async{
+
+import 'core/constants/app_strings.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await CacheNetwork.cacheInitialization();
-  ApiConstant.token = await CacheNetwork.getCacheData(key: 'token');
-  runApp(MyApp());
+  const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+
+
+  ApiConstant.token = await secureStorage.read(key: 'token');
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,16 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Online Exam App',
-      theme: ThemeData(
-        useMaterial3: false
-      ),
-      home: RegisterScreen(),
-      // Define the routes
+      title: AppStrings.appName,
+      theme: ThemeData(useMaterial3: false),
+      home: ApiConstant.token != null ? const LoginScreen() : const RegisterScreen(),
       routes: {
-        RegisterScreen.routeName: (context) => RegisterScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        // Add other routes here if you have more screens
+        RegisterScreen.routeName: (context) => const RegisterScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
       },
     );
   }

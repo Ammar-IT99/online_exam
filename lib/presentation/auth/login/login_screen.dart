@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/presentation/auth/login/cubit/login_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import '../../../core/di.dart';
 import '../../utlis/custome_text_form_feild.dart';
+import '../../utlis/dialog_utlis.dart';
 import 'cubit/states.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,10 +18,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginScreenViewModel viewModel = LoginScreenViewModel(
+  final LoginScreenViewModel viewModel = LoginScreenViewModel(
     signInUseCase: injectSignInUseCase(),
   );
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
   bool rememberMe = false;
+
   @override
   void initState() {
     super.initState();
@@ -27,26 +32,29 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loadRememberMe() async {
-    final prefs = await SharedPreferences.getInstance();
+    String? remember = await secureStorage.read(key: 'rememberMe');
     setState(() {
-      rememberMe = prefs.getBool('rememberMe') ?? false;
+      rememberMe = remember == 'true';
       if (rememberMe) {
-        viewModel.emailController.text = prefs.getString('email') ?? '';
-        viewModel.passwordController.text = prefs.getString('password') ?? '';
+        secureStorage.read(key: 'email').then((value) {
+          viewModel.emailController.text = value ?? '';
+        });
+        secureStorage.read(key: 'password').then((value) {
+          viewModel.passwordController.text = value ?? '';
+        });
       }
     });
   }
 
   void _saveRememberMe() async {
-    final prefs = await SharedPreferences.getInstance();
     if (rememberMe) {
-      await prefs.setBool('rememberMe', true);
-      await prefs.setString('email', viewModel.emailController.text);
-      await prefs.setString('password', viewModel.passwordController.text);
+      await secureStorage.write(key: 'rememberMe', value: 'true');
+      await secureStorage.write(
+          key: 'email', value: viewModel.emailController.text);
+      await secureStorage.write(
+          key: 'password', value: viewModel.passwordController.text);
     } else {
-      await prefs.remove('rememberMe');
-      await prefs.remove('email');
-      await prefs.remove('password');
+      await secureStorage.deleteAll();
     }
   }
 
@@ -56,125 +64,109 @@ class _LoginScreenState extends State<LoginScreen> {
       bloc: viewModel,
       listener: (context, state) {
         if (state is SignInLoadingState) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          );
+          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is SignInSuccessState) {
-          Navigator.of(context).pop(); // Dismiss the loading dialog
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Success")));
+          DialogUtlis.hideLoadingDialog(context);
+          DialogUtlis.showMessageDialog(
+            context,
+            message: "${AppStrings.loginSuccess}\n${state.authResultEntity.userEntity?.username}",
+            posButtonTitle: AppStrings.ok,
+            posButtonAction: () {},
+          );
         } else if (state is SignInErrorState) {
-          Navigator.of(context).pop(); // Dismiss the loading dialog
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          DialogUtlis.hideLoadingDialog(context);
+          DialogUtlis.showMessageDialog(
+            context,
+            message: '${state.errorMessage}${AppStrings.pleaseTryAgain}',
+            posButtonTitle: AppStrings.ok,
+          );
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Signin'),
+          title: const Text(AppStrings.login),
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: viewModel.formKey,
             child: ListView(
               children: <Widget>[
                 CustomTextFormField(
-                  label: 'Email',
+                  label: AppStrings.email,
                   keyboardType: TextInputType.emailAddress,
                   controller: viewModel.emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return AppStrings.enterYourEmail;
                     }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Please enter a valid email address';
+                    return null;
+                  },
+                ),
+                CustomTextFormField(
+                  label: AppStrings.password,
+                  isPassword: true,
+                  controller: viewModel.passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppStrings.enterYourPassword;
                     }
                     return null;
                   },
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: CustomTextFormField(
-                        label: 'Password',
-                        isPassword: true,
-                        controller: viewModel.passwordController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (!RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
-                              .hasMatch(value)) {
-                            return 'Password must be at least 11 characters long and include an uppercase letter, a lowercase letter, a number, and a special character';
-                          }
-                          return null;
-                        },
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              rememberMe = value ?? false;
+                            });
+                          },
+                        ),
+                        const Text(AppStrings.rememberMe),
+                      ],
+                    ),
+                    const Text(
+                      AppStrings.forgetPassword,
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 12.0,
                       ),
                     ),
                   ],
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: rememberMe,
-                            onChanged: (value) {
-                              setState(() {
-                                rememberMe = value ?? false;
-                              });
-                            },
-                          ),
-                          const Text('Remember Me'),
-                        ],
-                      ),
-                      Text('Forget Password?',
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontSize: 12.0))
-                    ]),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (viewModel.formKey.currentState!.validate()) {
                       _saveRememberMe();
                       viewModel.signIn();
-                      print('email + Password = ${viewModel.emailController.text + viewModel.passwordController.text + rememberMe.toString()}');
                     }
                   },
-                  child: Text('Signin'),
+                  child: const Text(AppStrings.login),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  Text(
-                    'Don\'t have an account? ',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, RegisterScreen.routeName);
-                    },
-                    child: Text(
-                      'Sign up',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+                    const Text(AppStrings.doNotHaveAccount),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, RegisterScreen.routeName);
+                      },
+                      child: const Text(
+                        AppStrings.signup,
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               ],
             ),
           ),

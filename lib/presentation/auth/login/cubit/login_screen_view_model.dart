@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/domain/use_case/signin_use_case.dart';
 import 'package:online_exam/presentation/auth/login/cubit/states.dart';
 
+import '../../../../data/api/api_result.dart';
+
 class LoginScreenViewModel extends Cubit<LoginState> {
   LoginScreenViewModel({required this.signInUseCase}) : super(SignInInitialState());
 
@@ -19,18 +21,15 @@ class LoginScreenViewModel extends Cubit<LoginState> {
     }
 
     emit(SignInLoadingState());
-    var either = await signInUseCase.invoke(
+    var result = await signInUseCase.invoke(
         emailController.text,
         passwordController.text,
         );
-
-    either.fold(
-      (l) {
-        emit(SignInErrorState(l.errorMessage!));
-      },
-      (r) {
-        emit(SignInSuccessState(authResultEntity: r));
-      },
-    );
+    switch (result) {
+      case Success(data: final authEntity):
+        emit(SignInSuccessState(authResultEntity: authEntity));
+      case Failure(message: final error):
+        emit(SignInErrorState(error));
+    }
   }
 }

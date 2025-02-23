@@ -1,13 +1,17 @@
-class Failures{
-  String? errorMessage;
-  Failures({required this.errorMessage});
-
-}
-class ServerError extends Failures{
-  ServerError({required String errorMessage}) : super(errorMessage: errorMessage);
-
-
-}
-class NetworkError extends Failures{
-  NetworkError({required String errorMessage}) : super(errorMessage: errorMessage);
-}
+// sealed class Failure {
+//   final String message;
+//   const Failure(this.message);
+// }
+//
+// class ServerError extends Failure {
+//    ServerError(super.message);
+//
+// }
+//
+// class NetworkError extends Failure {
+//   const NetworkError(super.message);
+// }
+//
+// class UnknownError extends Failure {
+//   const UnknownError(super.message);
+// }

@@ -1,27 +1,24 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class CacheNetwork{
-  static late SharedPreferences sharedPref;
+class CacheNetwork {
+  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
-  static Future cacheInitialization() async {
-    sharedPref = await SharedPreferences.getInstance();
+
+  static Future<void> insertToCache({required String key, required String value}) async {
+    await _secureStorage.write(key: key, value: value);
   }
 
-  // set - get - delete - clear ( key , value )
- static Future<bool> insertToCache({required String key,required String value}) async {
-    return await sharedPref.setString(key, value);
- }
+  static Future<String?> getCacheData({required String key}) async {
+    return await _secureStorage.read(key: key);
+  }
 
- static Future<String?> getCacheData({required String key}) async {
-    return sharedPref.getString(key);
- }
 
- static Future<bool> deleteCacheItem({required String key}) async {
-    return await sharedPref.remove(key);
- }
+  static Future<void> deleteCacheItem({required String key}) async {
+    await _secureStorage.delete(key: key);
+  }
 
- static Future<bool> clearData() async {
-    return await sharedPref.clear();
- }
 
+  static Future<void> clearData() async {
+    await _secureStorage.deleteAll();
+  }
 }
