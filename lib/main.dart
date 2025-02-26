@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Online Exam App',
-      theme: ThemeData(
-        useMaterial3: false
-      ),
+      theme: ThemeData(useMaterial3: false),
       home: RegisterScreen(),
       // Define the routes
       routes: {
