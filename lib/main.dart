@@ -15,7 +15,7 @@ void main() async {
   ApiConstant.token = await secureStorage.read(key: 'token');
 
   runApp(const MyApp());
-=======
+
 
 
 }
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appName,
       theme: ThemeData(useMaterial3: false),
       home: ApiConstant.token != null ? const LoginScreen() : const RegisterScreen(),
-=======
+
  
       // Define the routes
 
