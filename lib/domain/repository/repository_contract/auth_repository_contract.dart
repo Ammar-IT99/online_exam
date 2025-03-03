@@ -1,7 +1,7 @@
 
-import 'package:dartz/dartz.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
-import 'package:online_exam/domain/entity/failures.dart';
+import '../../../data/api/api_result.dart';
 abstract class AuthRepositoryContract{
-  Future<Either<Failures, AuthResultEntity>> register(String userName, String firstName, String lastName, String email, String password, String rePassword, String phoneNumber);
+  Future<ApiResult<AuthResultEntity>> register(String userName, String firstName, String lastName, String email, String password, String rePassword, String phoneNumber);
+  Future<ApiResult<AuthResultEntity>> signIn(String email, String password,);
   }
