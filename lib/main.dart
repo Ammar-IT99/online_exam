@@ -4,6 +4,7 @@ import 'package:online_exam/data/api/api_constant.dart';
 import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 
+
 import 'core/constants/app_strings.dart';
 
 void main() async {
@@ -14,6 +15,9 @@ void main() async {
   ApiConstant.token = await secureStorage.read(key: 'token');
 
   runApp(const MyApp());
+=======
+
+
 }
 
 class MyApp extends StatelessWidget {
@@ -23,13 +27,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       title: AppStrings.appName,
       theme: ThemeData(useMaterial3: false),
       home: ApiConstant.token != null ? const LoginScreen() : const RegisterScreen(),
-      routes: {
-        RegisterScreen.routeName: (context) => const RegisterScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-      },
+=======
+ 
+      // Define the routes
+
     );
   }
 }
