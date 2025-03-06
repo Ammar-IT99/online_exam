@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appName,
       theme: ThemeData(useMaterial3: false),
       home: ApiConstant.token != null ? const LoginScreen() : const RegisterScreen(),
+
       routes: {
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
       },
 
 
+
+
+ 
       // Define the routes
 
     );
