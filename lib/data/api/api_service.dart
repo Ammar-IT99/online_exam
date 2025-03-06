@@ -9,6 +9,8 @@ import 'package:online_exam/data/models/request/signin_request.dart';
 import 'package:online_exam/data/models/response/Register_response_data_model.dart';
 import 'package:online_exam/data/models/response/signin_response.dart';
 import '../models/request/Register_request.dart';
+import '../models/request/forgot_password_request.dart';
+import '../models/response/forgot_password_response_dto.dart';
 import 'api_constant.dart';
 import 'package:http/http.dart' as http;
 
@@ -117,4 +119,47 @@ class ApiService {
       return Failure('Unexpected Error: $e');
     }
   }
+  // 📩 Forgot Password
+  // 📩 Forgot Password
+  Future<ForgotPasswordResult> forgotPassword(String email) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.forgotPasswordApi);
+      var forgotPasswordRequest = ForgotPasswordRequest(
+        email: email,
+      );
+      var requestBody = jsonEncode(forgotPasswordRequest.toJson());
+
+      var response = await http.post(
+        url,
+        body: requestBody,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      var responseData = jsonDecode(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        var forgotPasswordResponse = ForGotPasswordDto.fromJson(responseData);
+        return Success(forgotPasswordResponse);
+      } else {
+        return Failure(responseData['message'] ?? 'Server Error: ${response.body}');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
+
+
+
+
 }

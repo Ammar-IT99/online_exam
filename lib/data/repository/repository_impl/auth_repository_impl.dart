@@ -1,7 +1,7 @@
-import 'package:dartz/dartz.dart';
-import 'package:online_exam/domain/entity/auth_result_entity.dart';
 
-import 'package:online_exam/domain/entity/failures.dart';
+import 'package:online_exam/domain/entity/auth_result_entity.dart';
+import 'package:online_exam/domain/entity/forgot_password_entity.dart';
+
 
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
 import '../../../domain/repository/repository_contract/auth_repository_contract.dart';
@@ -18,10 +18,18 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   }
 
   //signIn
-  //register
   @override
   Future<ApiResult<AuthResultEntity>> signIn(String email, String password,) {
     return remoteDataSource.signIn(
         email, password,);
   }
+  //forgotPassword
+  @override
+  Future<ApiResult<ForgotPasswordEntity>> forgotPassword(String email) {
+    // TODO: implement forgotPassword
+   return remoteDataSource.forgotPassword(email);
+  }
+
+
+
 }
