@@ -1,9 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:online_exam/domain/repository/repository_contract/auth_repository_contract.dart';
 
 import '../../data/api/api_result.dart';
 import '../entity/auth_result_entity.dart';
-import '../entity/failures.dart';
+
 
 class RegisterUseCase {
  AuthRepositoryContract authRepositoryContract;

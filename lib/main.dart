@@ -6,6 +6,7 @@ import 'package:online_exam/presentation/auth/register/register_screen.dart';
 
 
 import 'core/constants/app_strings.dart';
+import 'presentation/forgotPassword/forgot_password_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,7 @@ void main() async {
   ApiConstant.token = await secureStorage.read(key: 'token');
 
   runApp(const MyApp());
-=======
+
 
 
 }
@@ -31,8 +32,13 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appName,
       theme: ThemeData(useMaterial3: false),
       home: ApiConstant.token != null ? const LoginScreen() : const RegisterScreen(),
-=======
- 
+      routes: {
+        RegisterScreen.routeName: (context) => const RegisterScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        ForgotPasswordScreen.routeName: (context) =>  ForgotPasswordScreen(),
+      },
+
+
       // Define the routes
 
     );

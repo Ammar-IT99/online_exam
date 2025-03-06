@@ -5,6 +5,7 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/presentation/auth/login/cubit/login_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import '../../../core/di.dart';
+import '../../forgotPassword/forgot_password_screen.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
 import 'cubit/states.dart';
@@ -130,11 +131,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         const Text(AppStrings.rememberMe),
                       ],
                     ),
-                    const Text(
-                      AppStrings.forgetPassword,
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 12.0,
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ForgotPasswordScreen.routeName);
+                      },
+                      child: const Text(
+                        AppStrings.forgetPassword,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 12.0,
+
+                        ),
                       ),
                     ),
                   ],
