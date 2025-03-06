@@ -111,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return AppStrings.enterYourPassword;
                           }
                           if (!RegExp(
-                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}\$')
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
                               .hasMatch(value)) {
                             return AppStrings.passwordError;
                           }
@@ -141,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null || value.isEmpty) {
                       return AppStrings.enterYourPhoneNumber;
                     }
-                    if (!RegExp(r'^01[0125][0-9]{8}\$').hasMatch(value)) {
+                    if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value)) {
                       return AppStrings.phoneNumberError;
                     }
                     return null;
@@ -156,9 +156,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   child: const Text(AppStrings.signup),
                 ),
-                TextButton(
-                  onPressed: () => viewModel.navigateToLogin(context),
-                  child: const Text(AppStrings.alreadyHaveAccount),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(AppStrings.alreadyHaveAccount),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.routeName);
+                      },
+                      child: const Text(
+                        AppStrings.login,
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
