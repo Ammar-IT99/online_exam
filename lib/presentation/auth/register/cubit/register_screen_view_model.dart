@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:online_exam/domain/use_case/register_use_case.dart';
 import 'package:online_exam/presentation/auth/register/cubit/states.dart';
 
 import '../../../../data/api/api_result.dart';
 import '../../login/login_screen.dart';
-
+@injectable
 class RegisterScreenViewModel extends Cubit<RegisterState> {
   RegisterScreenViewModel({required this.registerUseCase}) : super(RegisterInitialState());
 
