@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
-
 import '../../core/constants/app_strings.dart';
 import '../../core/di.dart';
 import '../utlis/dialog_utlis.dart';
@@ -17,7 +16,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-final ForgotPasswordViewModel viewModel = ForgotPasswordViewModel(forgotPasswordUseCase: injectForgotPasswordUseCase());
+  final ForgotPasswordViewModel viewModel = getIt<ForgotPasswordViewModel>();
 
   @override
   Widget build(BuildContext context) {

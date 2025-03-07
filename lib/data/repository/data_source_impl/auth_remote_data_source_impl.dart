@@ -1,9 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
 import '../../api/api_result.dart';
 import '../../api/api_service.dart';
-
+@LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final ApiService apiService;
 

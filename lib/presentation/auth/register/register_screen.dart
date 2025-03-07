@@ -17,9 +17,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final RegisterScreenViewModel viewModel = RegisterScreenViewModel(
-    registerUseCase: injectRegisterUseCase(),
-  );
+  final RegisterScreenViewModel viewModel = getIt<RegisterScreenViewModel>();
 
   @override
   Widget build(BuildContext context) {

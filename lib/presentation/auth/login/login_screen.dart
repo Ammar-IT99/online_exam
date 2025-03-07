@@ -19,9 +19,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginScreenViewModel viewModel = LoginScreenViewModel(
-    signInUseCase: injectSignInUseCase(),
-  );
+  final LoginScreenViewModel viewModel = getIt<LoginScreenViewModel>();
+
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   bool rememberMe = false;
