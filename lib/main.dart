@@ -6,9 +6,11 @@ import 'package:online_exam/presentation/auth/register/register_screen.dart';
 
 
 import 'core/constants/app_strings.dart';
+import 'core/di.dart';
 import 'presentation/forgotPassword/forgot_password_screen.dart';
 
 void main() async {
+  configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
   const FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
