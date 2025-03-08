@@ -25,18 +25,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       bloc: viewModel,
       listener: (context, state) {
         if (state is RegisterLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is RegisterSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
             posButtonTitle: AppStrings.ok,
             posButtonAction: () {},
           );
         } else if (state is RegisterErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: '${AppStrings.registerError}, ${state.errorMessage}\n${AppStrings.pleaseTryAgain}',
             posButtonTitle: AppStrings.ok,

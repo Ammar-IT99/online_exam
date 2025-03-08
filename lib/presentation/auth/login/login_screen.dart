@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/presentation/auth/login/cubit/login_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
+import 'package:online_exam/presentation/home/home_screen.dart';
 import '../../../core/di.dart';
 import '../../forgotPassword/forgot_password_screen.dart';
 import '../../utlis/custome_text_form_feild.dart';
@@ -64,21 +65,26 @@ class _LoginScreenState extends State<LoginScreen> {
       bloc: viewModel,
       listener: (context, state) {
         if (state is SignInLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is SignInSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: "${AppStrings.loginSuccess}\n${state.authResultEntity.userEntity?.username}",
             posButtonTitle: AppStrings.ok,
-            posButtonAction: () {},
+            posButtonAction: () {
+              Navigator.pushNamed(context, HomeScreen.routeName);
+            },
           );
         } else if (state is SignInErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: '${state.errorMessage}${AppStrings.pleaseTryAgain}',
             posButtonTitle: AppStrings.ok,
+            posButtonAction: () {
+              Navigator.pop(context);
+            },
           );
         }
       },
@@ -135,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushNamed(
                             context, ForgotPasswordScreen.routeName);
                       },
-                      child: const Text(
+                      child:  Text(
                         AppStrings.forgetPassword,
                         style: TextStyle(
                           decoration: TextDecoration.underline,
@@ -152,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (viewModel.formKey.currentState!.validate()) {
                       _saveRememberMe();
                       viewModel.signIn();
+                      Navigator.pushNamed(context, HomeScreen.routeName);
                     }
                   },
                   child: const Text(AppStrings.login),

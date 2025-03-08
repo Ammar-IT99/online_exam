@@ -23,6 +23,8 @@ import '../domain/use_case/forgot_password_use_case.dart' as _i755;
 import '../domain/use_case/register_use_case.dart' as _i224;
 import '../domain/use_case/signin_use_case.dart' as _i435;
 import '../presentation/auth/login/cubit/login_screen_view_model.dart' as _i703;
+import '../presentation/auth/register/cubit/register_screen_view_model.dart'
+    as _i265;
 import '../presentation/forgotPassword/cubit/forgot_password_view_model.dart'
     as _i515;
 
@@ -55,6 +57,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i515.ForgotPasswordViewModel>(() =>
         _i515.ForgotPasswordViewModel(
             forgotPasswordUseCase: gh<_i755.ForgotPasswordUseCase>()));
+    gh.factory<_i265.RegisterScreenViewModel>(() =>
+        _i265.RegisterScreenViewModel(
+            registerUseCase: gh<_i224.RegisterUseCase>()));
     return this;
   }
 }
