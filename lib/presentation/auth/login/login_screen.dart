@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             message: "${AppStrings.loginSuccess}\n${state.authResultEntity.userEntity?.username}",
             posButtonTitle: AppStrings.ok,
             posButtonAction: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName,(route)=>false,);
             },
           );
         } else if (state is SignInErrorState) {
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
             message: '${state.errorMessage}${AppStrings.pleaseTryAgain}',
             posButtonTitle: AppStrings.ok,
             posButtonAction: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, LoginScreen.routeName);
             },
           );
         }
@@ -158,7 +158,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (viewModel.formKey.currentState!.validate()) {
                       _saveRememberMe();
                       viewModel.signIn();
-                      Navigator.pushNamed(context, HomeScreen.routeName);
                     }
                   },
                   child: const Text(AppStrings.login),
@@ -174,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         AppStrings.signup,
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: AppColors.blueBase,
                           decoration: TextDecoration.underline,
                         ),
                       ),
