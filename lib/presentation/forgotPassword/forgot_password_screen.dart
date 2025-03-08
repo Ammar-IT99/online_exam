@@ -24,10 +24,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       bloc: viewModel,
       listener: (context, state) {
         if (state is ForgotLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is ForgotSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: "${AppStrings.forgotPasswordSuccess}, ${state.forgotPasswordEntity.info}",
             posButtonTitle: AppStrings.ok,
@@ -37,8 +37,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           );
         }
         else if (state is ForgotErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: '${state.errorMessage}\n${AppStrings.pleaseTryAgain}',
             posButtonTitle: AppStrings.ok,
