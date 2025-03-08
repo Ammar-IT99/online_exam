@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-class DialogUtlis{
+class DialogUtils{
 static  void showMessageDialog(BuildContext context,
       {required String message,
         String? posButtonTitle,

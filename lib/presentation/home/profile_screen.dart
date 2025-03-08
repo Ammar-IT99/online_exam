@@ -15,17 +15,15 @@ class ProfileScreen extends StatelessWidget {
   static const String routeName = 'profile-screen';
   @override
   Widget build(BuildContext context) {
-    final RegisterScreenViewModel viewModel = RegisterScreenViewModel(
-      registerUseCase: injectRegisterUseCase(),
-    );
+    final RegisterScreenViewModel viewModel = getIt<RegisterScreenViewModel>();
     return BlocListener<RegisterScreenViewModel, RegisterState>(
       bloc: viewModel,
       listener: (context, state) {
         if (state is RegisterLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is RegisterSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message:
                 "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
@@ -33,8 +31,8 @@ class ProfileScreen extends StatelessWidget {
             posButtonAction: () {},
           );
         } else if (state is RegisterErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message:
                 '${AppStrings.registerError}, ${state.errorMessage}\n${AppStrings.pleaseTryAgain}',

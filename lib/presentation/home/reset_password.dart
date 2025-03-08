@@ -17,17 +17,15 @@ class ResetPassword extends StatelessWidget {
     var currentPasswordController = TextEditingController();
   var newPasswordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
-    final RegisterScreenViewModel viewModel = RegisterScreenViewModel(
-      registerUseCase: injectRegisterUseCase(),
-    );
+    final RegisterScreenViewModel viewModel = getIt<RegisterScreenViewModel>();
     return BlocListener<RegisterScreenViewModel, RegisterState>(
       bloc: viewModel,
       listener: (context, state) {
         if (state is RegisterLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is RegisterSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message:
                 "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
@@ -35,8 +33,8 @@ class ResetPassword extends StatelessWidget {
             posButtonAction: () {},
           );
         } else if (state is RegisterErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message:
                 '${AppStrings.registerError}, ${state.errorMessage}\n${AppStrings.pleaseTryAgain}',

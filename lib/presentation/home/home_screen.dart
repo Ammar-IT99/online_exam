@@ -3,10 +3,10 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/presentation/home/explore_screen.dart';
 import 'package:online_exam/presentation/home/profile_screen.dart';
 import 'package:online_exam/presentation/home/result_screen.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
   static const String routeName = 'Home Screen';
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return TextStyle(
           fontWeight: FontWeight.w500,
-          color: AppColors.blackOverthirty, // Unselected label color
+          color: AppColors.blackOverThirty, // Unselected label color
         );
       },
     ),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: ImageIcon(
               color: currentScreen == 0
                   ? AppColors.blueBase
-                  : AppColors.blackOverthirty,
+                  : AppColors.blackOverThirty,
               AssetImage(
                 AppStrings.exploreIcon,
               ),
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: ImageIcon(
               color: currentScreen == 1
                   ? AppColors.blueBase
-                  : AppColors.blackOverthirty,
+                  : AppColors.blackOverThirty,
               AssetImage(
                 AppStrings.resultIcon,
               ),
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: ImageIcon(
               color: currentScreen == 2
                   ? AppColors.blueBase
-                  : AppColors.blackOverthirty,
+                  : AppColors.blackOverThirty,
               AssetImage(
                 AppStrings.profileIcon,
               ),

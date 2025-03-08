@@ -65,10 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
       bloc: viewModel,
       listener: (context, state) {
         if (state is SignInLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: AppStrings.loading);
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is SignInSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: "${AppStrings.loginSuccess}\n${state.authResultEntity.userEntity?.username}",
             posButtonTitle: AppStrings.ok,
@@ -77,8 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           );
         } else if (state is SignInErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
             message: '${state.errorMessage}${AppStrings.pleaseTryAgain}',
             posButtonTitle: AppStrings.ok,
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushNamed(
                             context, ForgotPasswordScreen.routeName);
                       },
-                      child: const Text(
+                      child:  Text(
                         AppStrings.forgetPassword,
                         style: TextStyle(
                           decoration: TextDecoration.underline,

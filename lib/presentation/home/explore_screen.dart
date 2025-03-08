@@ -47,7 +47,7 @@ class ExploreScreen extends StatelessWidget {
                   ),
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
-                    prefixIconColor: AppColors.blackOverthirty,
+                    prefixIconColor: AppColors.blackOverThirty,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.r)),
                       borderSide: BorderSide(
@@ -57,7 +57,7 @@ class ExploreScreen extends StatelessWidget {
                     hintStyle: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.blackOverthirty),
+                        color: AppColors.blackOverThirty),
                     border: InputBorder.none,
                     hintText: AppStrings.search,
                   ),

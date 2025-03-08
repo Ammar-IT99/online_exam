@@ -34,6 +34,6 @@ class CustomBrowseBySubject extends StatelessWidget {
         ),
       ),
     );
-    ;
+
   }
 }

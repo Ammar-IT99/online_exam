@@ -8,7 +8,7 @@ class AppStrings {
   static const String firstName = 'First name';
   static const String lastName = 'Last name';
   static const String passwordAppBar = 'Password';
-
+  static const String forgetPassword = 'forgetPassword';
   static const String password = 'Password';
   static const String phoneNumber = 'Phone number';
   static const String confirmPassword = 'Confirm password';
@@ -57,7 +57,6 @@ static const String hintEnterEmailToResetPassword = 'please Enter your email ass
     static const String sixCharactersWithUpperCaseLetterAndOne = '6 characters with upper case letter and one';
     static const String numberAtLeast = 'number at least';
     static const String newPassword = 'New password';
-    //static const String confirmPassword = 'Confirm password';
     static const String exploreIcon = 'assets/explore_icon.png';
     static const String resultIcon = 'assets/result_icon.png';
     static const String profileIcon = 'assets/profile_icon.png';
