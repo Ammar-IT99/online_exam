@@ -4,20 +4,25 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/data/api/api_constant.dart';
 import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
+import 'core/di.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import 'package:online_exam/presentation/home/profile_screen.dart';
 import 'package:online_exam/presentation/home/reset_password.dart';
 import 'presentation/forgotPassword/forgot_password_screen.dart';
 
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  configureDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
   const FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
 
   ApiConstant.token = await secureStorage.read(key: 'token');
-  runApp(MyApp());
+
+  runApp( MyApp());
+
+
+
 }
 
 class MyApp extends StatelessWidget {
@@ -47,6 +52,10 @@ class MyApp extends StatelessWidget {
           },
         );
       },
+
+
+      // Define the routes
+
     );
   }
 }

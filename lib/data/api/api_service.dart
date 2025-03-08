@@ -14,14 +14,8 @@ import '../models/response/forgot_password_response_dto.dart';
 import 'api_constant.dart';
 import 'package:http/http.dart' as http;
 
-@singleton
+@lazySingleton
 class ApiService {
-  static ApiService? _instance;
-
-  static ApiService getInstance() {
-    _instance ??= ApiService();
-    return _instance!;
-  }
 
   //register
   Future< RegisterResult> register(

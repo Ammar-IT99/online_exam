@@ -45,6 +45,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   flutter_screenutil: ^5.9.3
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
