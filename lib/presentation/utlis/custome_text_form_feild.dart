@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
@@ -6,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextEditingController controller;
   final FormFieldValidator<String>? validator;
+  final Widget? widget;
   const CustomTextFormField({
     super.key,
     required this.label,
@@ -13,12 +15,13 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
    required this.controller,
     this.validator,
+    this.widget
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.only(right: 8.w,left: 8.w,bottom: 14.h,top: 14),
       child: TextFormField(
         controller: controller,
         obscureText: isPassword,
@@ -26,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
         validator: validator,
         decoration: InputDecoration(
           labelText: label,
+          suffixIcon: widget,
           border: OutlineInputBorder(),
 
         ),
