@@ -1,4 +1,3 @@
-
 class ForgotPasswordRequest {
   final String email;
 
