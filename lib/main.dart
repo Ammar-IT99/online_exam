@@ -11,6 +11,7 @@ import 'package:online_exam/presentation/home/profile_screen.dart';
 import 'package:online_exam/presentation/home/reset_password.dart';
 import 'presentation/forgotPassword/forgot_password_screen.dart';
 import 'package:online_exam/presentation/auth/reset_password/reset_password_screen.dart';
+import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
 
 void main() async {
   configureDependencies();
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
             ResetPassword.routeName: (context) => ResetPassword(),
             ProfileScreen.routeName: (context) => ProfileScreen(),
             ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
+             VerifyResetCodeScreen.routeName: (context) => VerifyResetCodeScreen(),
           },
         );
       },
