@@ -20,7 +20,6 @@ class VerifyResetCodeViewModel extends Cubit<VerifyResetCodeState> {
     this.email = email;
   }
 
-
   Future<void> verifyCode(String resetCode) async {
     if (email == null || email!.isEmpty) {
       emit(VerifyResetCodeError('Email is required before verifying the code.'));

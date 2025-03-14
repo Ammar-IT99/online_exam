@@ -12,7 +12,6 @@ class VerifyResetCodeScreen extends StatefulWidget {
   static const String routeName = 'VerifyResetCodeScreen';
 
   const VerifyResetCodeScreen({super.key});
-
   @override
   State<VerifyResetCodeScreen> createState() => _VerifyResetCodeScreenState();
 }
@@ -31,7 +30,7 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<VerifyResetCodeViewModel, VerifyResetCodeState>(
-      bloc: viewModel, // تحديد الـ bloc مباشرةً من getIt
+      bloc: viewModel,
       listener: (context, state) {
         if (state is VerifyResetCodeLoading) {
           DialogUtils.showLoadingDialog(context, message: AppStrings.verifyingCode);
