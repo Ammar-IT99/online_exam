@@ -29,7 +29,7 @@ static const String hintEnterEmailToResetPassword = 'please Enter your email ass
   static const String signup = 'Sign up';
   static const String home = 'Home';
   static const String profile = 'Profile';
-
+static const String pleaseConfirmPassword = 'Please confirm your password';
   static const String resetPassword = 'Reset Password';
   static const String loading = 'Loading...';
   static const String registerSuccess = 'Registration successful!';
@@ -42,7 +42,7 @@ static const String hintEnterEmailToResetPassword = 'please Enter your email ass
   static const String continueText = 'Continue';
   static const String forgotPasswordSuccess = 'OTP sent to your email';
   static const String forgotPasswordError = 'There is no account with this email address  admin1@1eleate.com';
-
+static const String pleaseEnterNewPassword = 'Please enter a new password';
 
     static const String pleaseEnterYourEmailAssociatedTo = 'Please enter your email associated to';
     static const String yourAccount = 'your account';
@@ -84,6 +84,14 @@ static const String hintEnterEmailToResetPassword = 'please Enter your email ass
     static const String showResult = 'Show Result';
     static const String startAgain = 'Start again';
     static const String circularDeterminate = 'assets/circular-determinate.png';
+  static const String verifyingCode = 'Verifying Code...';
+  static const String retry = 'Retry';
+  static const String verificationCodeResent = 'Verification code resent!';
+  static const String passwordVerification = 'Password Verification';
+  static const String emailVerificationTitle = 'Email Verification';
+  static const String enterVerificationCode = 'Please enter the verification code sent to your email address.';
+  static const String enterValidCode = 'Please enter a valid 6-digit code.';
+  static const String resendCode = 'Resend';
 }
 class AppColors{
   static const Color lightBlue = Color(0xffEDEFF3);
@@ -97,4 +105,5 @@ class AppColors{
   static const Color lightGreen = Color(0xffCAF9CC);
   static const Color lightRed = Color(0xffF8D2D2);
   static const Color darkWhite = Color(0xffF9F9F9);
+  static const Color blueShade = Color(0xffE3F2FD);
 }

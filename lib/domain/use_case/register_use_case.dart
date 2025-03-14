@@ -4,7 +4,7 @@ import 'package:online_exam/domain/repository/repository_contract/auth_repositor
 import '../../data/api/api_result.dart';
 import '../entity/auth_result_entity.dart';
 
-@injectable
+@lazySingleton
 class RegisterUseCase {
  AuthRepositoryContract authRepositoryContract;
  RegisterUseCase( {required this.authRepositoryContract});

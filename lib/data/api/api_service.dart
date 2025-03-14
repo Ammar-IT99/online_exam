@@ -5,14 +5,20 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/cache_network.dart';
 import 'package:online_exam/data/api/api_result.dart';
-import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/data/models/request/signin_request.dart';
 import 'package:online_exam/data/models/response/Register_response_data_model.dart';
+import 'package:online_exam/data/models/response/signin_response.dart';
 import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
 import 'package:online_exam/data/models/response/get_single_subject_dto.dart';
 import 'package:online_exam/data/models/response/signin_response.dart';
 import 'package:online_exam/domain/entity/get_all_subjects_entity.dart';
 import '../models/request/Register_request.dart';
+import '../models/request/forgot_password_request.dart';
+import '../models/request/reset_password_request.dart';
+import '../models/request/verify_reset_code_request.dart';
+import '../models/response/forgot_password_response_dto.dart';
+import '../models/response/reset_password_response_dto.dart';
+import '../models/response/verify_reset_code_dto.dart';
 import '../models/request/forgot_password_request.dart';
 import '../models/response/forgot_password_response_dto.dart';
 import 'api_constant.dart';
@@ -20,37 +26,19 @@ import 'package:http/http.dart' as http;
 
 @lazySingleton
 class ApiService {
-  bool isTokenExpired(String token) {
-    try {
-      List<String> parts = token.split('.');
-      if (parts.length != 3) return true;
-
-      String payload =
-          utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
-      Map<String, dynamic> payloadMap = jsonDecode(payload);
-
-      int exp = payloadMap["exp"] ?? 0; // Expiration time
-      int now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-      return now >= exp; // Check if expired
-    } catch (e) {
-      return true; // If there's an error, assume token is expired
-    }
-  }
-
   //register
-  Future<RegisterResult> register(
+  Future< RegisterResult> register(
       String email,
       String password,
       String userName,
       String firstName,
       String lastName,
       String phoneNumber,
-      String rePassword) async {
+      String rePassword)  async {
     try {
       var connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult == ConnectivityResult.none) {
-        return Failure('No Internet Connection');
+        return Failure( 'No Internet Connection');
       }
 
       Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.registerApi);
@@ -73,22 +61,23 @@ class ApiService {
       try {
         var responseData = jsonDecode(response.body);
         if (response.statusCode >= 200 && response.statusCode < 300) {
-          var registerResponse =
-              RegisterResponseDataModel.fromJson(responseData);
-          return Success(registerResponse);
+          var registerResponse = RegisterResponseDataModel.fromJson(responseData);
+          return Success( registerResponse);
         } else {
-          return Failure(responseData['message'] ??
-              'Server Error: ${response.statusCode}');
+          return Failure(
+              responseData['message'] ?? 'Server Error: ${response.statusCode}');
         }
       } catch (e) {
         return Failure('Invalid JSON response: $e');
       }
     } on SocketException {
-      return Failure('No Internet Connection');
+      return Failure( 'No Internet Connection');
     } on TimeoutException {
-      return Failure('Request timed out');
+      return Failure( 'Request timed out');
+
     } catch (e) {
-      return Failure('Unexpected Error: $e');
+
+      return Failure( 'Unexpected Error: $e');
     }
   }
 
@@ -96,8 +85,7 @@ class ApiService {
   Future<SignInResult> signIn(
     String email,
     String password,
-  ) async {
-    try {
+  ) async{    try {
       var connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult == ConnectivityResult.none) {
         return Failure('No Internet Connection');
@@ -115,26 +103,105 @@ class ApiService {
         body: requestBody,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${ApiConstant.token}'
         },
       );
       var responseData = jsonDecode(response.body);
+      await CacheNetwork.insertToCache(key: "token", value: responseData['token']??'');
+        ApiConstant.token = await CacheNetwork.getCacheData(key: "token");
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var loginResponse = SignInResponseDataModel.fromJson(responseData);
-        // ✅ Store token after login
-        String token = responseData['token'] ?? '';
-        if (token.isNotEmpty) {
-          await CacheNetwork.insertToCache(key: "token", value: token);
-          ApiConstant.token = token; // ✅ Update token globally
-          print("✅ Token Stored: $token");
-        } else {
-          print("⚠️ Token is empty");
-        }
         return Success(loginResponse);
       } else {
-        return Failure((' ${responseData['message']}'));
+        return Failure(
+            ( ' ${responseData['message']}'));
       }
     } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
+   // 📩 Forgot Password
+  Future<ForgotPasswordResult> forgotPassword(String email) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.forgotPasswordApi);
+      var forgotPasswordRequest = ForgotPasswordRequest(
+        email: email,
+      );
+      var requestBody = jsonEncode(forgotPasswordRequest.toJson());
+
+      var response = await http.post(
+        url,
+        body: requestBody,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      var responseData = jsonDecode(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        var forgotPasswordResponse = ForGotPasswordDto.fromJson(responseData);
+        return Success(forgotPasswordResponse);
+      } else {
+        return Failure(responseData['message'] ?? 'Server Error: ${response.body}');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
+
+
+  Future<VerifyResetCodeResult> verifyResetCode(String resetCode) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.verifyResetCodeApi);
+      var requestModel = VerifyResetCodeRequestModel(resetCode: resetCode);
+      var requestBody = jsonEncode(requestModel.toJson());
+
+      var response = await http.post(
+        url,
+        body: requestBody,
+        headers: {'Content-Type': 'application/json',
+       },
+      ).timeout(const Duration(seconds: 10));
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+      try {
+        var responseData = jsonDecode(response.body);
+        print('Decoded JSON: $responseData');
+
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          var verifyResponse = VerifyResetCodeDto.fromJson(responseData);
+          print('API Call Successful');
+          return Success(verifyResponse);
+        } else {
+          print('Server Error: ${responseData['message']}');
+          return Failure(responseData['message'] ?? 'Server Error: ${response.statusCode}');
+        }
+      } catch (jsonError) {
+        print('JSON Decoding Error: $jsonError');
+        return Failure('Invalid JSON format: $jsonError');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
       return Failure('Unexpected Error: $e');
     }
   }
@@ -329,4 +396,52 @@ class ApiService {
       return Failure('Unexpected Error: $e');
     }
   }
+
+
+// 📂 api_service.dart
+
+  Future<ResetPasswordResult> resetPassword(
+
+     String email,
+     String newPassword,
+  ) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.resetPasswordApi);
+      var requestModel = ResetPasswordRequestModel(
+        email: email,
+        newPassword: newPassword,
+      );
+      var requestBody = jsonEncode(requestModel.toJson());
+
+      var response = await http.put(
+        url,
+        body: requestBody,
+        headers: {'Content-Type': 'application/json'},
+      ).timeout(const Duration(seconds: 10));
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      var responseData = jsonDecode(response.body);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        var resetResponse = ResetPasswordResponseDto.fromJson(responseData);
+        return Success(resetResponse);
+      } else {
+        return Failure(responseData['message'] ?? 'Server Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
+
+
+
+
+
+
 }
