@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
+import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
- static const routeName = 'resultScreen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,50 +73,30 @@ class ResultScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 80.h,),
-              GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 340.w,
-                    height: 55.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100.r),
-                        ),
-                        color: AppColors.blueBase),
-                    child: Center(
-                      child: Text(
-                        AppStrings.showResult,
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
+              Padding(padding: EdgeInsets.all(16.r),child:CustomElevatedButton(label: AppStrings.showResult,onTap: (){},),),
+              // GestureDetector(
+              //     onTap: () {},
+              //     child: Container(
+              //       width: 340.w,
+              //       height: 55.h,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.all(
+              //             Radius.circular(100.r),
+              //           ),
+              //           color: AppColors.blueBase),
+              //       child: Center(
+              //         child: Text(
+              //           AppStrings.showResult,
+              //           style: TextStyle(
+              //               fontSize: 16.sp,
+              //               fontWeight: FontWeight.w500,
+              //               color: Colors.white),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
                 SizedBox(height: 24.h,),
-                 GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 340.w,
-                    height: 55.h,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.blueBase),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100.r),
-                        ),
-                        color: Colors.white),
-                    child: Center(
-                      child: Text(
-                        AppStrings.startAgain,
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.blueBase),
-                      ),
-                    ),
-                  ),
-                ),
+                Padding(padding: EdgeInsets.all(16.r),child:CustomElevatedButton(label: AppStrings.startAgain,onTap: (){},backgroundColor: Colors.white,textStyle: TextStyle(color: AppColors.blueBase),),),
             ],
           ),
         ),

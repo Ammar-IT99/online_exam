@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
-import '../../core/constants/app_strings.dart';
-import '../../core/di.dart';
-import '../utlis/dialog_utlis.dart';
+import '../../../core/constants/app_strings.dart';
+import '../../../core/di.dart';
+import '../../utlis/dialog_utlis.dart';
 import 'cubit/forgot_password_view_model.dart';
 import 'cubit/states.dart';
 

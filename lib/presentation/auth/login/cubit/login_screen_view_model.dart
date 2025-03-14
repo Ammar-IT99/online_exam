@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam/core/cache_network.dart';
+import 'package:online_exam/data/api/api_constant.dart';
 import 'package:online_exam/domain/use_case/signin_use_case.dart';
 import 'package:online_exam/presentation/auth/login/cubit/states.dart';
 
@@ -28,7 +30,9 @@ class LoginScreenViewModel extends Cubit<LoginState> {
         );
     switch (result) {
       case Success(data: final authEntity):
+      await CacheNetwork.insertToCache(key: 'token', value: authEntity.token??'');
         emit(SignInSuccessState(authResultEntity: authEntity));
+        break;
       case Failure(message: final error):
         emit(SignInErrorState(error));
     }

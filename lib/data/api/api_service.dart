@@ -8,8 +8,12 @@ import 'package:online_exam/data/api/api_result.dart';
 import 'package:online_exam/data/models/request/signin_request.dart';
 import 'package:online_exam/data/models/response/Register_response_data_model.dart';
 import 'package:online_exam/data/models/response/signin_response.dart';
+
+import 'package:online_exam/data/models/response/get_single_subject_dto.dart';
+
 import '../models/request/Register_request.dart';
 import '../models/request/forgot_password_request.dart';
+import '../models/request/get_all_subjects_request.dart';
 import '../models/request/reset_password_request.dart';
 import '../models/request/verify_reset_code_request.dart';
 import '../models/response/forgot_password_response_dto.dart';
@@ -102,7 +106,7 @@ class ApiService {
       );
       var responseData = jsonDecode(response.body);
       await CacheNetwork.insertToCache(key: "token", value: responseData['token']??'');
-        ApiConstant.token = await CacheNetwork.getCacheData(key: "token");
+        ApiConstant.token = (await CacheNetwork.getCacheData(key: "token"))!;
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var loginResponse = SignInResponseDataModel.fromJson(responseData);
@@ -189,6 +193,100 @@ class ApiService {
       } catch (jsonError) {
         print('JSON Decoding Error: $jsonError');
         return Failure('Invalid JSON format: $jsonError');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+      return Failure('Unexpected Error: $e');
+    }
+  }
+
+  Future<GetAllSubjectsResult> getAllSubjects(String name, String icon) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+
+      final token =
+          await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
+      print('tokeeeeen is $token');
+
+      // 🔍 Check if token is expired
+
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getAllSubjectsApi);
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'token': '$token',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      print("📌 API Response Code: ${response.statusCode}");
+      print("📌 API Response Body: ${response.body}");
+
+      var responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        List<GetAllSubjectsRequest> subjectsList =
+            (responseData['subjects'] as List)
+                .map((element) => GetAllSubjectsRequest.fromJson(element))
+                .toList();
+        print('sssssssss$subjectsList');
+        return Success(subjectsList);
+      } else {
+        return Failure(responseData['message'] ?? 'Server Error');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
+
+//get single subject
+  Future<GetSingleSubjectsResult> getSingleSubject(String message) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+
+      final token =
+          await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
+      print('tokeeeeen is $token');
+
+      // 🔍 Check if token is expired
+
+      Uri url =
+          Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getIngleSubjectsApi);
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'token': '$token',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      print("📌 API Response Code: ${response.statusCode}");
+      print("📌 API Response Body: ${response.body}");
+
+      var responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        var getSingleSubject = GetSingleSubjectDto.fromJson(responseData);
+        return Success(getSingleSubject);
+      } else {
+        return Failure(
+            responseData['message'] ?? 'Server Error: ${response.body}');
       }
     } on SocketException {
       return Failure('No Internet Connection');
