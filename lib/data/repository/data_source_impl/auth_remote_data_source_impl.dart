@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
+import 'package:online_exam/domain/entity/reset_password_entity.dart';
+import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
 import '../../api/api_result.dart';
 import '../../api/api_service.dart';
@@ -66,4 +68,28 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Failure(error);
     }
   }
+
+  @override
+  Future<ApiResult<VerifyResetCodeEntity>> verifyResetCode(String resetCode) async{
+    final result= await apiService.verifyResetCode(resetCode);
+    switch (result) {
+      case Success(data: final response):
+        return Success(response.toVerifyResetCodeEntity());
+      case Failure(message: final error):
+        return Failure(error);
+    }
+  }
+
+  @override
+  Future<ApiResult<ResetPasswordEntity>> resetPassword( String email,  String newPassword) async{
+
+    final result =  await apiService.resetPassword(email,newPassword);
+    print('API Response: $result');
+    switch (result) {
+      case Success(data: final response):
+        return Success(response.toResetPasswordEntity());
+      case Failure(message: final error):
+        return Failure(error);
+  }
+}
 }
