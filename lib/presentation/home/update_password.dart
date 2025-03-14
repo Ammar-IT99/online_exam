@@ -5,7 +5,7 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/core/di.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/cubit/states.dart';
-import 'package:online_exam/presentation/home/profile_screen.dart';
+import 'package:online_exam/presentation/home/profile/profile_screen.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import 'package:online_exam/presentation/utlis/dialog_utlis.dart';
 

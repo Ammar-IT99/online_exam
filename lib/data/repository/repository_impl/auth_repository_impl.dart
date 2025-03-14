@@ -1,17 +1,16 @@
 
 import 'package:injectable/injectable.dart';
 
-import 'package:injectable/injectable.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
-import 'package:online_exam/data/models/request/get_single_subject_request.dart';
+
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
 import 'package:online_exam/domain/entity/reset_password_entity.dart';
 import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
-import 'package:online_exam/domain/entity/forgot_password_entity.dart';
-import 'package:online_exam/domain/entity/get_all_subjects_entity.dart';
+
+
 import 'package:online_exam/domain/entity/get_single_subjects_entity.dart';
-import 'package:online_exam/domain/entity/subjects_entity.dart';
+
 
 
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
@@ -50,22 +49,6 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   Future<ApiResult<ResetPasswordEntity>> resetPassword( String email, String newPassword) {
  return remoteDataSource.resetPassword( email, newPassword);
 
-  }
-
-
-
-
-  //signIn
-  @override
-  Future<ApiResult<AuthResultEntity>> signIn(String email, String password,) {
-    return remoteDataSource.signIn(
-        email, password,);
-  }
-  //forgotPassword
-  @override
-  Future<ApiResult<ForgotPasswordEntity>> forgotPassword(String email) {
-    // TODO: implement forgotPassword
-   return remoteDataSource.forgotPassword(email);
   }
 
   //getAllSubjects

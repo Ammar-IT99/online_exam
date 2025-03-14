@@ -60,12 +60,12 @@ class ResetPasswordViewModel extends Cubit<ResetPasswordState> {
 
         case Failure(message: final error):
           emit(ResetPasswordError(error));
-          print('Failure State Emitted: $error');
+
           break;
       }
     } catch (e) {
       emit(ResetPasswordError('Unexpected Error: $e'));
-      print('Unexpected Error: $e');
+
     }
   }
 

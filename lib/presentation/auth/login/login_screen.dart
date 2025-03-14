@@ -6,9 +6,9 @@ import 'package:online_exam/presentation/auth/login/cubit/login_screen_view_mode
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import '../../../core/di.dart';
-import '../../forgotPassword/forgot_password_screen.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
+import '../forgotPassword/forgot_password_screen.dart';
 import 'cubit/states.dart';
 
 class LoginScreen extends StatefulWidget {

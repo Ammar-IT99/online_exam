@@ -4,19 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/cache_network.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/data/api/api_constant.dart';
-import 'package:online_exam/data/api/api_result.dart';
-import 'package:online_exam/data/api/api_service.dart';
-import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
-import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
-import 'package:online_exam/data/repository/data_source_impl/auth_remote_data_source_impl.dart';
-import 'package:online_exam/data/repository/repository_impl/auth_repository_impl.dart';
-import 'package:online_exam/domain/entity/subjects_entity.dart';
-import 'package:online_exam/domain/repository/repository_contract/auth_repository_contract.dart';
+
 import 'package:online_exam/presentation/home/explore/cubit/get_all_subjects_view_model.dart';
 import 'package:online_exam/presentation/home/explore/cubit/states.dart';
 import 'package:online_exam/presentation/utlis/custom_browse_by_subject.dart';
 import 'package:online_exam/core/di.dart';
-import 'package:online_exam/presentation/utlis/dialog_utlis.dart';
+
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({
@@ -31,13 +24,7 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   final GetAllSubjectsViewModel viewModel = getIt<GetAllSubjectsViewModel>();
   final searchController = TextEditingController();
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     viewModel.getAllSubjects(); // Ensure API call happens after build
-  //   });
-  // }
+
   @override
   void initState() {
     super.initState();
@@ -47,12 +34,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void loadToken() async {
     ApiConstant.token = await CacheNetwork.getCacheData(key: "token") ?? '';
 
-    print("🔑 Token Before Home Screen Decision: ${ApiConstant.token}");
-
     if (ApiConstant.token.isNotEmpty) {
       viewModel.getAllSubjects();
     } else {
-      print("⚠️ No token found, user may need to log in again.");
+     return ;
     }
   }
 
