@@ -51,8 +51,8 @@ class MyApp extends StatelessWidget {
             VerifyResetCodeScreen.routeName: (context) => VerifyResetCodeScreen(),
             ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
             ProfileScreen.routeName: (context) => ProfileScreen(),
-            ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
-             VerifyResetCodeScreen.routeName: (context) => VerifyResetCodeScreen(),
+            
+         
           },
         );
       },
