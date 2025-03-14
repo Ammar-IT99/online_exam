@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/di.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
+import '../login/login_screen.dart';
 import 'cubit/states.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,95 +17,82 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  RegisterScreenViewModel viewModel = RegisterScreenViewModel(
-    registerUseCase: injectRegisterUseCase(),
-  );
+  final RegisterScreenViewModel viewModel = getIt<RegisterScreenViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
+    return BlocListener<RegisterScreenViewModel, RegisterState>(
       bloc: viewModel,
       listener: (context, state) {
-
         if (state is RegisterLoadingState) {
-          DialogUtlis.showLoadingDialog(context, message: 'Loading...');
+          DialogUtils.showLoadingDialog(context, message: AppStrings.loading);
         } else if (state is RegisterSuccessState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
-            message: "Registration successful\n${state.authResultEntity.userEntity?.username}",
-            posButtonTitle: 'Ok',
+            message: "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
+            posButtonTitle: AppStrings.ok,
             posButtonAction: () {},
           );
         } else if (state is RegisterErrorState) {
-          DialogUtlis.hideLoadingDialog(context);
-          DialogUtlis.showMessageDialog(
+          DialogUtils.hideLoadingDialog(context);
+          DialogUtils.showMessageDialog(
             context,
-            message: '${state.errorMessage}"\nPlease try again',
-            posButtonTitle: 'OK',
-
+            message: '${AppStrings.registerError}, ${state.errorMessage}\n${AppStrings.pleaseTryAgain}',
+            posButtonTitle: AppStrings.ok,
           );
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Signup'),
+          title: const Text(AppStrings.signup),
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: viewModel.formKey,
             child: ListView(
               children: <Widget>[
                 CustomTextFormField(
-                  label: 'Username',
+                  label: AppStrings.userName,
                   controller: viewModel.userNameController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your username';
-                    }
-                    return null;
-                  },
+                  validator: (value) => value?.isEmpty ?? true
+                      ? AppStrings.enterYourUserName
+                      : null,
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: CustomTextFormField(
-                        label: 'First Name',
+                        label: AppStrings.firstName,
                         controller: viewModel.firstNameController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your first name';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value?.isEmpty ?? true
+                            ? AppStrings.enterYourFirstName
+                            : null,
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: CustomTextFormField(
-                        label: 'Last Name',
+                        label: AppStrings.lastName,
                         controller: viewModel.lastNameController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your last name';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value?.isEmpty ?? true
+                            ? AppStrings.enterYourLastName
+                            : null,
                       ),
                     ),
                   ],
                 ),
                 CustomTextFormField(
-                  label: 'Email',
+                  label: AppStrings.email,
                   keyboardType: TextInputType.emailAddress,
                   controller: viewModel.emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return AppStrings.enterYourEmail;
                     }
                     if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Please enter a valid email address';
+                        return AppStrings.emailError;
                     }
                     return null;
                   },
@@ -112,65 +101,76 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     Expanded(
                       child: CustomTextFormField(
-                        label: 'Password',
+                        label: AppStrings.password,
                         isPassword: true,
                         controller: viewModel.passwordController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
+                            return AppStrings.enterYourPassword;
                           }
-                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$').hasMatch(value)) {
-                            return 'Password must be at least 11 characters long and include an uppercase letter, a lowercase letter, a number, and a special character';
+                          if (!RegExp(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
+                              .hasMatch(value)) {
+                            return AppStrings.passwordError;
                           }
                           return null;
                         },
+
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: CustomTextFormField(
-                        label: 'Confirm Password',
+                        label: AppStrings.confirmPassword,
                         isPassword: true,
                         controller: viewModel.confirmPasswordController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password again';
-                          }
-                          if (value != viewModel.passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value != viewModel.passwordController.text
+                            ? AppStrings.rePasswordError
+                            : null,
                       ),
                     ),
                   ],
                 ),
                 CustomTextFormField(
-                  label: 'Phone Number',
+                  label: AppStrings.phoneNumber,
                   keyboardType: TextInputType.phone,
                   controller: viewModel.phoneNumberController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
+                      return AppStrings.enterYourPhoneNumber;
                     }
                     if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value)) {
-                      return 'Phone number must be 11 digits long and start with 01';
+                      return AppStrings.phoneNumberError;
                     }
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    viewModel.register();
+                    if (viewModel.formKey.currentState?.validate() ?? false) {
+                      viewModel.register();
+                    }
                   },
-                  child: Text('Signup'),
+                  child: const Text(AppStrings.signup),
                 ),
-                TextButton(
-                  onPressed: () {
-                    // Navigate to login screen
-                  },
-                  child: Text('Already have an account? Log in'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(AppStrings.alreadyHaveAccount),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.routeName);
+                      },
+                      child: const Text(
+                        AppStrings.login,
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

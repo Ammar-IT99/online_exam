@@ -1,7 +1,13 @@
 
-import 'package:dartz/dartz.dart';
+import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
-import 'package:online_exam/domain/entity/failures.dart';
+import 'package:online_exam/domain/entity/get_single_subjects_entity.dart';
+import '../../../data/api/api_result.dart';
+import '../../entity/forgot_password_entity.dart';
 abstract class AuthRepositoryContract{
-  Future<Either<Failures, AuthResultEntity>> register(String userName, String firstName, String lastName, String email, String password, String rePassword, String phoneNumber);
+  Future<ApiResult<AuthResultEntity>> register(String userName, String firstName, String lastName, String email, String password, String rePassword, String phoneNumber);
+  Future<ApiResult<AuthResultEntity>> signIn(String email, String password,);
+  Future<ApiResult<ForgotPasswordEntity>> forgotPassword(String email);
+  Future<ApiResult<List<GetAllSubjectsRequest>>> getAllSubjects(String name,String icon);
+  Future<ApiResult<GetSingleSubjectsEntity>> getSingleSubjects(String message,);
   }
