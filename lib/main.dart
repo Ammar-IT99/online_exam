@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/presentation/home/profile_screen.dart';
 import 'package:online_exam/presentation/home/reset_password.dart';
 import 'presentation/forgotPassword/forgot_password_screen.dart';
+import 'package:online_exam/presentation/auth/reset_password/reset_password_screen.dart';
 
 void main() async {
   configureDependencies();
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
             ForgotPasswordScreen.routeName: (context) =>  ForgotPasswordScreen(),
             ResetPassword.routeName: (context) => ResetPassword(),
             ProfileScreen.routeName: (context) => ProfileScreen(),
+            ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
           },
         );
       },
