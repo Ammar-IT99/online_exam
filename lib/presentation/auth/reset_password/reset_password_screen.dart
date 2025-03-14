@@ -27,7 +27,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.didChangeDependencies();
     final email = ModalRoute.of(context)?.settings.arguments as String?;
     if (email != null) {
-      viewModel.setEmail(email); // ✅ تعيين الـ email في الـ ViewModel
+      viewModel.setEmail(email);
 
     } else {
 
