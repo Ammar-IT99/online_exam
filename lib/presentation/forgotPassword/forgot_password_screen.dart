@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import '../../core/constants/app_strings.dart';
 import '../../core/di.dart';
@@ -29,10 +30,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           DialogUtils.hideLoadingDialog(context);
           DialogUtils.showMessageDialog(
             context,
-            message: "${AppStrings.forgotPasswordSuccess}, ${state.forgotPasswordEntity.info}",
+            message: " ${state.forgotPasswordEntity.info}",
             posButtonTitle: AppStrings.ok,
             posButtonAction: () {
-
+              Navigator.pushNamed(
+                context,
+                VerifyResetCodeScreen.routeName,
+                arguments: viewModel.emailController.text,
+              );
             },
           );
         }
@@ -54,12 +59,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             backgroundColor: Colors.transparent,
             title: Text(AppStrings.password,
               style: TextStyle(
-                color: Colors.black,
+                color: AppColors.blackBase,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),),
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black,),
+              icon:  Icon(Icons.arrow_back_ios_new, color: AppColors.blackBase,),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -73,7 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     const SizedBox(height: 40),
                     Text(AppStrings.forgetPassword,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppColors.blackBase,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -82,7 +87,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     const SizedBox(height: 15),
                     Text(AppStrings.hintEnterEmailToResetPassword,
                       style: TextStyle(
-                        color: Colors.grey,
+                        color: AppColors.gray,
                         fontSize: 18,
                       ),
                       textAlign: TextAlign.center,

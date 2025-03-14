@@ -5,7 +5,7 @@ import 'package:online_exam/presentation/home/home_screen.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
-
+ static const routeName = 'resultScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
