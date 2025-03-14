@@ -4,24 +4,23 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/data/api/api_constant.dart';
 import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
+import 'package:online_exam/presentation/auth/reset_password/reset_password_screen.dart';
+import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
 import 'core/di.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/presentation/home/profile_screen.dart';
-import 'package:online_exam/presentation/home/reset_password.dart';
 import 'presentation/forgotPassword/forgot_password_screen.dart';
+
 
 void main() async {
   configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
   const FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
-
   ApiConstant.token = await secureStorage.read(key: 'token');
 
   runApp( MyApp());
-
-
 
 }
 
@@ -35,8 +34,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        ScreenUtil.init(context);
-        return MaterialApp(
+      ScreenUtil.init(context);
+      return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: AppStrings.appName,
           theme: ThemeData(useMaterial3: false,),
@@ -47,7 +46,8 @@ class MyApp extends StatelessWidget {
             LoginScreen.routeName: (context) => const LoginScreen(),
             HomeScreen.routeName: (context) => HomeScreen(),
             ForgotPasswordScreen.routeName: (context) =>  ForgotPasswordScreen(),
-            ResetPassword.routeName: (context) => ResetPassword(),
+            VerifyResetCodeScreen.routeName: (context) => VerifyResetCodeScreen(),
+            ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
             ProfileScreen.routeName: (context) => ProfileScreen(),
           },
         );
