@@ -97,7 +97,7 @@ class ResetPassword extends StatelessWidget {
                         },
                 ),
                 CustomTextFormField(
-                  label: AppStrings.confirmPassword,
+                  label: AppStrings.pleaseConfirmPassword,
                   controller: confirmPasswordController,
                   validator: (value) {
                           if (value == null || value.isEmpty) {

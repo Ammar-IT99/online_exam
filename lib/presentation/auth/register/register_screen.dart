@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(width: 15),
                     Expanded(
                       child: CustomTextFormField(
-                        label: AppStrings.confirmPassword,
+                        label: AppStrings.pleaseConfirmPassword,
                         isPassword: true,
                         controller: viewModel.confirmPasswordController,
                         validator: (value) => value != viewModel.passwordController.text

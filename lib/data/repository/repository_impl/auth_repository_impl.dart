@@ -2,6 +2,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
+import 'package:online_exam/domain/entity/reset_password_entity.dart';
+import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
 
 
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
@@ -29,6 +31,17 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   Future<ApiResult<ForgotPasswordEntity>> forgotPassword(String email) {
     // TODO: implement forgotPassword
    return remoteDataSource.forgotPassword(email);
+  }
+
+  @override
+  Future<ApiResult<VerifyResetCodeEntity>> verifyResetCode(String resetCode) {
+    return remoteDataSource.verifyResetCode(resetCode);
+  }
+
+  @override
+  Future<ApiResult<ResetPasswordEntity>> resetPassword( String email, String newPassword) {
+ return remoteDataSource.resetPassword( email, newPassword);
+
   }
 
 
