@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/question_on_exam_response.dart';
 
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
@@ -135,6 +136,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         List<GetAllExamsRequest> entities = response.map((dto) =>
             dto.toGetAllExamsRequest()).toList();
         return Success(entities);
+      case Failure(message: final error):
+        return Failure(error);
+    }
+  }
+
+  @override
+  Future<ApiResult<QuestionOnExamResponse>> getQuestion({required String examID}) async{
+    final result = await apiService.getQuestions(examID);
+
+    switch (result) {
+      case Success(data: final response):
+        return Success(response);
       case Failure(message: final error):
         return Failure(error);
     }

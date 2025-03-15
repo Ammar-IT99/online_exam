@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/question_on_exam_response.dart';
 
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
@@ -69,5 +70,11 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title, int numberOfQuestions, int duration) {
     // TODO: implement getAllExams
     return remoteDataSource.getAllExams(title, numberOfQuestions, duration);
+  }
+
+  @override
+  Future<ApiResult<QuestionOnExamResponse>> getQuestion({required String examID}) {
+    // TODO: implement getQuestion
+    return remoteDataSource.getQuestion(examID: examID);
   }
 }

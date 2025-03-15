@@ -6,8 +6,10 @@ import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/cache_network.dart';
 import 'package:online_exam/data/api/api_result.dart';
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
+import 'package:online_exam/data/models/request/question_request.dart';
 import 'package:online_exam/data/models/request/signin_request.dart';
 import 'package:online_exam/data/models/response/Register_response_data_model.dart';
+import 'package:online_exam/data/models/response/question_on_exam_response.dart';
 import 'package:online_exam/data/models/response/signin_response.dart';
 
 import 'package:online_exam/data/models/response/get_single_subject_dto.dart';
@@ -388,7 +390,54 @@ class ApiService {
     }
   }
 
+//get questions
+  Future<GetQuestionsResult> getQuestions(String examId,) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
 
+      final token =
+          await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
+      print('tokeeeeen is $token');
+
+      // 🔍 Check if token is expired
+
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getQuestionsApi);
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'token': '$token',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      print("📌 API Response Code: ${response.statusCode}");
+      print("📌 API Response Body: ${response.body}");
+
+      var responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        // List<QuestionOnExamResponse> questionList =
+        //     (responseData['questions']['answers'] as List)
+        //         .map((element) => QuestionOnExamResponse.fromJson(element))
+        //         .toList();
+        QuestionOnExamResponse questionList=QuestionOnExamResponse.fromJson(jsonDecode(response.body));
+        print('sssssssss$questionList');
+        return Success(questionList);
+      } else {
+        return Failure(responseData['message'] ?? 'Server Error');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
 
 
 

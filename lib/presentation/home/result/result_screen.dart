@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
+import 'package:online_exam/data/models/response/Exam.dart';
+import 'package:online_exam/data/models/response/questions.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
-
+  ResultScreen({super.key, this.answers, this.time, this.examID, this.exam, this.questions});
+  List<Map<String, String>>? answers;
+  int? time;
+  String? examID;
+  Exam? exam;
+  List<Questions>? questions;
+  static const String routeName = 'result';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

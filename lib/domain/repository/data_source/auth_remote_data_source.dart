@@ -1,4 +1,5 @@
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
+import 'package:online_exam/data/models/response/question_on_exam_response.dart';
 
 import '../../../data/api/api_result.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
@@ -20,4 +21,5 @@ abstract class AuthRemoteDataSource{
   Future<ApiResult<List<GetAllSubjectsRequest>>> getAllSubjects(String name,String icon);
   Future<ApiResult<GetSingleSubjectsEntity>> getSingleSubjects(String message,);
   Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title,int numberOfQuestions,int duration);
+  Future<ApiResult<QuestionOnExamResponse>> getQuestion({required String examID});
   }

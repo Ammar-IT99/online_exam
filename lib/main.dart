@@ -9,6 +9,7 @@ import 'package:online_exam/presentation/auth/reset_password/reset_password_scre
 import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
 import 'package:online_exam/presentation/home/explore/exam_screen.dart';
 import 'package:online_exam/presentation/home/explore/start_exam_screen.dart';
+import 'package:online_exam/presentation/home/result/result_screen.dart';
 import 'core/di.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
             ProfileScreen.routeName: (context) => ProfileScreen(),
             ExamScreen.routeName: (context) => ExamScreen(),
             StartExamScreen.routeName: (context) => StartExamScreen(),
+            ResultScreen.routeName: (context) => ResultScreen(),
           },
         );
       },

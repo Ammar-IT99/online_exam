@@ -1,7 +1,9 @@
 
+import 'package:online_exam/data/api/api_result.dart';
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
+import 'package:online_exam/data/models/response/question_on_exam_response.dart';
 import 'package:online_exam/domain/entity/get_all_subjects_entity.dart';
 import 'package:online_exam/domain/entity/subjects_entity.dart';
 
@@ -37,4 +39,19 @@ class GetAllExamsSuccessState extends GetAllExams {
 class GetAllExamsErrorState extends GetAllExams {
   final String errorMessage;
   GetAllExamsErrorState(this.errorMessage);
+}
+
+//question
+sealed class Question0nexamState {}
+
+final class Question0nexamInitial extends Question0nexamState {}
+class QuestionOnExamLoadingState extends Question0nexamState{}
+
+class QuestionOnExamSuccessState extends Question0nexamState{
+  QuestionOnExamResponse response;
+  QuestionOnExamSuccessState(this.response);
+}
+class QuestionOnExamErrorState extends Question0nexamState{
+  String errMessage;
+  QuestionOnExamErrorState(this.errMessage);
 }
