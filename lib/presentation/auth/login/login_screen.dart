@@ -9,7 +9,7 @@ import '../../../core/di.dart';
 import '../../utlis/custom_elevated_button.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
-import '../forgotPassword/forgot_password_screen.dart';
+import '../forgot_password/forgot_password_screen.dart';
 import 'cubit/states.dart';
 
 class LoginScreen extends StatefulWidget {

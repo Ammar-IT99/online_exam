@@ -33,7 +33,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             context,
             message: "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
             posButtonTitle: AppStrings.ok,
-            posButtonAction: () {},
+            posButtonAction: () {
+              Navigator.pushNamed(context, LoginScreen.routeName);
+            },
           );
         } else if (state is RegisterErrorState) {
           DialogUtils.hideLoadingDialog(context);

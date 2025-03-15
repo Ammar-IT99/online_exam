@@ -77,6 +77,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
               ),
+              backgroundColor: AppColors.blueBase,
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),

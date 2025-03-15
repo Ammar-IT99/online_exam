@@ -127,7 +127,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     BlocBuilder<GetAllSubjectsViewModel, GetAllSubjects>(
                       bloc: viewModel,
                       builder: (context, state) {
-                        print("Current State: $state"); // لمعرفة الحالة الحالية
+
 
                         if (state is GetAllSubjectsLoadingState) {
                           return const Center(
@@ -135,14 +135,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 color: AppColors.blueBase,
                               ));
                         } else if (state is GetAllSubjectsSuccessState) {
-                          print(
-                              "Subjects Loaded: ${state.getAllSubjectsEntity.length}");
+
                           return state.getAllSubjectsEntity.isEmpty
                               ? const Center(
                                   child: Text('No subjects available'))
                               : ListView.builder(
                                   shrinkWrap:
-                                      true, // يضمن أن القائمة لا تأخذ كل المساحة
+                                      true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: state.getAllSubjectsEntity.length,
                                   itemBuilder: (context, index) {
