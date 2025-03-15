@@ -131,7 +131,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
                         if (state is GetAllSubjectsLoadingState) {
                           return const Center(
-                              child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(
+                                color: AppColors.blueBase,
+                              ));
                         } else if (state is GetAllSubjectsSuccessState) {
                           print(
                               "Subjects Loaded: ${state.getAllSubjectsEntity.length}");
@@ -161,31 +163,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ],
                 )
-                // CustomBrowseBySubject(
-                //   imagePath: AppStrings.languageTranslator,
-                //   subject: AppStrings.language,
-                // ),
-                // SizedBox(
-                //   height: 16.h,
-                // ),
-                // CustomBrowseBySubject(
-                //   imagePath: AppStrings.mathSubject,
-                //   subject: AppStrings.math,
-                // ),
-                // SizedBox(
-                //   height: 16.h,
-                // ),
-                // CustomBrowseBySubject(
-                //   imagePath: AppStrings.artSubject,
-                //   subject: AppStrings.art,
-                // ),
-                // SizedBox(
-                //   height: 16.h,
-                // ),
-                // CustomBrowseBySubject(
-                //   imagePath: AppStrings.microscope,
-                //   subject: AppStrings.science,
-                // ),
+
                 ),
           ));
         });

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/di.dart';
+import '../../utlis/custom_elevated_button.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
 import '../login/login_screen.dart';
@@ -46,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(AppStrings.signup),
+          backgroundColor:  AppColors.blueBase,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -146,13 +148,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
+                CustomElevatedButton(
+                  label: AppStrings.signup,
+                  onTap: (){
                     if (viewModel.formKey.currentState?.validate() ?? false) {
                       viewModel.register();
                     }
                   },
-                  child: const Text(AppStrings.signup),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -165,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: const Text(
                         AppStrings.login,
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: AppColors.blueBase,
                           decoration: TextDecoration.underline,
                         ),
                       ),

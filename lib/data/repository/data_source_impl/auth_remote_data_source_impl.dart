@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/get_log_out_response.dart';
 
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
@@ -123,4 +124,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Failure(error);
     }
   }
+
+  @override
+  Future<ApiResult<LogoutResponse>> logOut()async {
+    final result = await apiService.logout();
+    switch (result) {
+      case Success(data: final response):
+        return Success(response.toLogoutResponse());
+      case Failure(message: final error):
+        return Failure(error);
+  }
+}
 }

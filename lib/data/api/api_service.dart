@@ -17,6 +17,7 @@ import '../models/request/get_all_subjects_request.dart';
 import '../models/request/reset_password_request.dart';
 import '../models/request/verify_reset_code_request.dart';
 import '../models/response/forgot_password_response_dto.dart';
+import '../models/response/get_log_out_response.dart';
 import '../models/response/reset_password_response_dto.dart';
 import '../models/response/verify_reset_code_dto.dart';
 import 'api_constant.dart';
@@ -266,7 +267,7 @@ class ApiService {
       // 🔍 Check if token is expired
 
       Uri url =
-          Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getIngleSubjectsApi);
+          Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getSingleSubjectsApi);
 
       var response = await http.get(
         url,
@@ -323,8 +324,6 @@ class ApiService {
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
 
       var responseData = jsonDecode(response.body);
 
@@ -338,9 +337,28 @@ class ApiService {
       return Failure('Unexpected Error: $e');
     }
   }
-
-
-
+ Future<LogoutResult> logout() async {
+   try {
+     var connectivityResult = await Connectivity().checkConnectivity();
+     if (connectivityResult == ConnectivityResult.none) {
+       return Failure('No Internet Connection');
+     }
+     Uri url= Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getLogOutApi);
+     final response = await http.get(url,
+         headers: {
+           'Content-Type': 'application/json',
+           'Accept': 'application/json',
+           'token': ApiConstant.token});
+     if (response.statusCode == 200) {
+       var logoutResponse = LogoutResponse.fromJson(jsonDecode(response.body));
+       return Success(logoutResponse);
+     } else {
+       return Failure(jsonDecode(response.body)['message'] ?? 'Server Error: ${response.statusCode}');
+     }
+   }catch(e){
+     return Failure('Error: $e');
+   }
+ }
 
 
 
