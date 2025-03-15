@@ -3,6 +3,8 @@ import 'package:injectable/injectable.dart';
 
 import 'package:online_exam/presentation/auth/log_out_cubit/states.dart';
 
+import '../../../core/cache_network.dart';
+import '../../../data/api/api_constant.dart';
 import '../../../data/api/api_result.dart';
 import '../../../data/models/response/get_log_out_response.dart';
 import '../../../domain/use_case/logout_use_case.dart';
@@ -19,6 +21,8 @@ class LogOutCubit extends Cubit<LogOutState> {
 
     if (result is Success<LogoutResponse>) {
       print("Logout Success: ${result.data.message}");
+      await CacheNetwork.deleteCacheItem(key: "token");
+      ApiConstant.token = '';
       emit(LogOutLoggedOut(result.data.message));
     } else if (result is Failure) {
       emit(LogOutError(result.message));
