@@ -1,3 +1,5 @@
+import 'package:online_exam/domain/entity/exams_entity.dart';
+
 class SubjectsEntity{
   String? id;
   String? name;
@@ -17,7 +19,7 @@ class SubjectsEntity{
       '_id':id,
       'name':name,
       'icon':icon,
-      'createdAt':createdAt?.toIso8601String()
+      'createdAt':createdAt?.toIso8601String(),
     };
   }
 }

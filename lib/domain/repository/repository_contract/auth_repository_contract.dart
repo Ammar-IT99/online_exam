@@ -1,3 +1,4 @@
+import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
@@ -32,4 +33,6 @@ abstract class AuthRepositoryContract {
   Future<ApiResult<GetSingleSubjectsEntity>> getSingleSubjects(
     String message,
   );
+
+  Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title,int numberOfQuestions,int duration);
 }

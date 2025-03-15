@@ -1,4 +1,5 @@
 // core/network/api_result.dart
+import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
 import 'package:online_exam/data/models/response/get_single_subject_dto.dart';
@@ -33,3 +34,4 @@ typedef VerifyResetCodeResult = ApiResult<VerifyResetCodeDto>;
 typedef ResetPasswordResult = ApiResult<ResetPasswordResponseDto>;
 typedef GetAllSubjectsResult = ApiResult<List<GetAllSubjectsRequest>>;
 typedef GetSingleSubjectsResult = ApiResult<GetSingleSubjectDto>;
+typedef GetAllExamsResult = ApiResult<List<GetAllExamsRequest>>;

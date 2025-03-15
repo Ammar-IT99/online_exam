@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/cache_network.dart';
 import 'package:online_exam/data/api/api_result.dart';
+import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/signin_request.dart';
 import 'package:online_exam/data/models/response/Register_response_data_model.dart';
 import 'package:online_exam/data/models/response/signin_response.dart';
@@ -339,6 +340,53 @@ class ApiService {
     }
   }
 
+ //get all exams
+  Future<GetAllExamsResult> getAllExams(String title, int numberOfQuestions, int duration) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+
+      final token =
+          await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
+      print('tokeeeeen is $token');
+
+      // 🔍 Check if token is expired
+
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getAllExamsApi);
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'token': '$token',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      print("📌 API Response Code: ${response.statusCode}");
+      print("📌 API Response Body: ${response.body}");
+
+      var responseData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        List<GetAllExamsRequest> examsList =
+            (responseData['exams'] as List)
+                .map((element) => GetAllExamsRequest.fromJson(element))
+                .toList();
+        print('sssssssss$examsList');
+        return Success(examsList);
+      } else {
+        return Failure(responseData['message'] ?? 'Server Error');
+      }
+    } on SocketException {
+      return Failure('No Internet Connection');
+    } on TimeoutException {
+      return Failure('Request timed out');
+    } catch (e) {
+      return Failure('Unexpected Error: $e');
+    }
+  }
 
 
 

@@ -1,5 +1,6 @@
 
 import 'package:injectable/injectable.dart';
+import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 
@@ -63,5 +64,10 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
     // TODO: implement getSingleSubjects
     return remoteDataSource.getSingleSubjects(message);
   }
-
+  
+  @override
+  Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title, int numberOfQuestions, int duration) {
+    // TODO: implement getAllExams
+    return remoteDataSource.getAllExams(title, numberOfQuestions, duration);
+  }
 }

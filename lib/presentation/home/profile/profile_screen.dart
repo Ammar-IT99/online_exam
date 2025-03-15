@@ -54,10 +54,12 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(width: 16.w),
-                    GestureDetector(
+                    Row(
+                      children: [
+                        SizedBox(width: 16.w),
+                        GestureDetector(
                       onTap: () => Navigator.pushNamed(context, HomeScreen.routeName),
                       child: Icon(
                         Icons.arrow_back_ios,
@@ -71,7 +73,8 @@ class ProfileScreen extends StatelessWidget {
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w500),
                     ),
-                    SizedBox(width: 220.w),
+                      ],
+                    ),
                     IconButton(
                       onPressed: () {
                         Navigator.pushNamed(context, LoginScreen.routeName);

@@ -20,6 +20,7 @@ import '../domain/repository/data_source/auth_remote_data_source.dart' as _i341;
 import '../domain/repository/repository_contract/auth_repository_contract.dart'
     as _i235;
 import '../domain/use_case/forgot_password_use_case.dart' as _i755;
+import '../domain/use_case/get_all_exams_use_case.dart' as _i767;
 import '../domain/use_case/get_all_subjects_use_case.dart' as _i805;
 import '../domain/use_case/get_single_subject_use_case.dart' as _i2;
 import '../domain/use_case/register_use_case.dart' as _i224;
@@ -35,6 +36,8 @@ import '../presentation/auth/reset_password/cubit/reset_password_view_model.dart
     as _i867;
 import '../presentation/auth/verify_reset_code/cubit/verify_reset_code_view_model.dart'
     as _i319;
+import '../presentation/home/explore/cubit/get_all_exams_view_model.dart'
+    as _i562;
 import '../presentation/home/explore/cubit/get_all_subjects_view_model.dart'
     as _i570;
 
@@ -62,6 +65,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i755.ForgotPasswordUseCase>(() =>
         _i755.ForgotPasswordUseCase(
             authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
+    gh.lazySingleton<_i767.GetAllExamsUseCase>(() => _i767.GetAllExamsUseCase(
+        authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
     gh.lazySingleton<_i805.GetAllSubjectsUseCase>(() =>
         _i805.GetAllSubjectsUseCase(
             authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
@@ -70,6 +75,8 @@ extension GetItInjectableX on _i174.GetIt {
             authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
     gh.lazySingleton<_i224.RegisterUseCase>(() => _i224.RegisterUseCase(
         authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
+    gh.factory<_i562.GetAllExamsViewModel>(() => _i562.GetAllExamsViewModel(
+        getAllExamsUseCase: gh<_i767.GetAllExamsUseCase>()));
     gh.factory<_i703.LoginScreenViewModel>(() =>
         _i703.LoginScreenViewModel(signInUseCase: gh<_i435.SignInUseCase>()));
     gh.lazySingleton<_i353.VerifyResetCodeUseCase>(
