@@ -12,5 +12,7 @@ class ApiEndPoint{
   static const String verifyResetCodeApi = "/api/v1/auth/verifyResetCode";
 static const String resetPasswordApi = "/api/v1/auth/resetPassword";
   static const String getAllSubjectsApi = "/api/v1/subjects";
-  static const String getIngleSubjectsApi = "/api/v1/subjects/6715db9addfd54f0a196ab6c";
+  static const String getSingleSubjectsApi = "/api/v1/subjects/6715db9addfd54f0a196ab6c";
+  static const String getLogOutApi = "/api/v1/questions";
+
 }

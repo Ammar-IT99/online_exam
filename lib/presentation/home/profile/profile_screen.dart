@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/core/di.dart';
+import 'package:online_exam/data/api/api_service.dart';
 import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/cubit/states.dart';
 
-import 'package:online_exam/presentation/home/profile/reset_password.dart';
+import 'package:online_exam/presentation/home/profile/update_password.dart';
 import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import 'package:online_exam/presentation/utlis/dialog_utlis.dart';
 
+import '../../auth/log_out_cubit/log_out_cubit.dart';
 import '../home_screen.dart';
-
+@injectable
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -22,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegisterScreenViewModel viewModel = getIt<RegisterScreenViewModel>();
-
+   final LogOutCubit viewModelLogOutCubit = getIt<LogOutCubit>();
     return BlocListener<RegisterScreenViewModel, RegisterState>(
       bloc: viewModel,
       listener: (context, state) {
@@ -74,7 +77,9 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(width: 220.w),
                     IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, LoginScreen.routeName);
+                        viewModelLogOutCubit.logOut();
+                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (route) => false);
+
                       },
                       icon: Icon(
                       Icons.logout,

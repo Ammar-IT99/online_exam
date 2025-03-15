@@ -11,7 +11,7 @@ import 'core/di.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/presentation/home/profile/profile_screen.dart';
-import 'package:online_exam/presentation/home/profile/reset_password.dart';
+import 'package:online_exam/presentation/home/profile/update_password.dart';
 
 
 void main() async {
