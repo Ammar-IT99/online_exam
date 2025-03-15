@@ -1,5 +1,6 @@
 
 import 'package:injectable/injectable.dart';
+import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/data/models/response/get_log_out_response.dart';
@@ -35,10 +36,10 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
     return remoteDataSource.signIn(
         email, password,);
   }
-  //forgot_password
+  //forgotPassword
   @override
   Future<ApiResult<ForgotPasswordEntity>> forgotPassword(String email) {
-    // TODO: implement forgot_password
+    // TODO: implement forgotPassword
    return remoteDataSource.forgotPassword(email);
   }
 
@@ -56,7 +57,7 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   //getAllSubjects
   @override
   Future<ApiResult<List<GetAllSubjectsRequest>>> getAllSubjects(String name, String icon) {
-    // TODO: implement forgot_password
+    // TODO: implement forgotPassword
    return remoteDataSource.getAllSubjects(name,icon);
   }
 
@@ -77,4 +78,10 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
     return remoteDataSource.getUserInfo();
   }
 
+
+  @override
+  Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title, int numberOfQuestions, int duration) {
+    // TODO: implement getAllExams
+    return remoteDataSource.getAllExams(title, numberOfQuestions, duration);
+  }
 }

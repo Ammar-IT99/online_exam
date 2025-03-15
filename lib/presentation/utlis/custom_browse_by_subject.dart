@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBrowseBySubject extends StatelessWidget {
-  const CustomBrowseBySubject({super.key,required this.imagePath,required this.subject});
+  const CustomBrowseBySubject({super.key,required this.imagePath,required this.subject,required this.id});
   final String imagePath;
   final String subject;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Card(elevation: 8,child: Container(

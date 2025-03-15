@@ -14,6 +14,7 @@ import '../../../domain/entity/get_user_info_entity.dart';
 import '../../auth/log_out_cubit/log_out_cubit.dart';
 import '../../auth/log_out_cubit/states.dart';
 
+import '../home_screen.dart';
 
 @injectable
 class ProfileScreen extends StatelessWidget {
@@ -35,6 +36,7 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(width: 16.w),
                     Text(

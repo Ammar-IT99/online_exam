@@ -8,10 +8,13 @@ import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import 'package:online_exam/presentation/auth/reset_password/reset_password_screen.dart';
 import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
+import 'package:online_exam/presentation/home/explore/exam_screen.dart';
+import 'package:online_exam/presentation/home/explore/start_exam_screen.dart';
+import 'core/di.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import 'package:online_exam/presentation/home/profile/profile_screen.dart';
 import 'package:online_exam/presentation/home/profile/update_password.dart';
-import 'core/di.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,9 +52,15 @@ class MyApp extends StatelessWidget {
             ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
             UpdatePassword.routeName: (context) => UpdatePassword(),
             ProfileScreen.routeName: (context) => ProfileScreen(),
+            ExamScreen.routeName: (context) => ExamScreen(),
+            StartExamScreen.routeName: (context) => StartExamScreen(),
           },
         );
       },
+
+
+      // Define the routes
+
     );
   }
 }

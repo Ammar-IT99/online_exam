@@ -4,9 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/cache_network.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/data/api/api_constant.dart';
+import 'package:online_exam/data/models/request/get_all_exams_request.dart';
+import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
+import 'package:online_exam/domain/entity/exams_entity.dart';
+import 'package:online_exam/domain/entity/subjects_entity.dart';
 
 import 'package:online_exam/presentation/home/explore/cubit/get_all_subjects_view_model.dart';
 import 'package:online_exam/presentation/home/explore/cubit/states.dart';
+import 'package:online_exam/presentation/home/explore/exam_screen.dart';
 import 'package:online_exam/presentation/utlis/custom_browse_by_subject.dart';
 import 'package:online_exam/core/di.dart';
 
@@ -147,10 +153,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   itemBuilder: (context, index) {
                                     final item =
                                         state.getAllSubjectsEntity[index];
-
-                                    return CustomBrowseBySubject(
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, ExamScreen.routeName,arguments: GetAllSubjectsRequest(name: item.name,id: item.id));
+                                      },
+                                      child:CustomBrowseBySubject(
+                                        id: item.id??'',
                                         imagePath: item.icon ?? '',
-                                        subject: item.name ?? '');
+                                        subject: item.name ?? ''),);
                                   },
                                 );
                         } else if (state is GetAllSubjectsErrorState) {

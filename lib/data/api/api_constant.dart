@@ -15,6 +15,6 @@ static const String resetPasswordApi = "/api/v1/auth/resetPassword";
   static const String getSingleSubjectsApi = "/api/v1/subjects/6715db9addfd54f0a196ab6c";
   static const String getLogOutApi = "/api/v1/auth/logout";
   static const String getUserInfoApi = "/api/v1/auth/profileData";
-
+  static const String getAllExamsApi = "/api/v1/exams";
 
 }
