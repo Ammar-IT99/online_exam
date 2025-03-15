@@ -8,6 +8,7 @@ import 'package:online_exam/data/api/api_result.dart';
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/signin_request.dart';
 import 'package:online_exam/data/models/response/Register_response_data_model.dart';
+import 'package:online_exam/data/models/response/get_user_info_response_dto.dart';
 import 'package:online_exam/data/models/response/signin_response.dart';
 
 import 'package:online_exam/data/models/response/get_single_subject_dto.dart';
@@ -18,6 +19,7 @@ import '../models/request/get_all_subjects_request.dart';
 import '../models/request/reset_password_request.dart';
 import '../models/request/verify_reset_code_request.dart';
 import '../models/response/forgot_password_response_dto.dart';
+import '../models/response/get_log_out_response.dart';
 import '../models/response/reset_password_response_dto.dart';
 import '../models/response/verify_reset_code_dto.dart';
 import 'api_constant.dart';
@@ -214,7 +216,7 @@ class ApiService {
 
       final token =
           await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
-      print('tokeeeeen is $token');
+
 
       // 🔍 Check if token is expired
 
@@ -229,8 +231,7 @@ class ApiService {
         },
       ).timeout(const Duration(seconds: 10));
 
-      print("📌 API Response Code: ${response.statusCode}");
-      print("📌 API Response Body: ${response.body}");
+
 
       var responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -238,7 +239,7 @@ class ApiService {
             (responseData['subjects'] as List)
                 .map((element) => GetAllSubjectsRequest.fromJson(element))
                 .toList();
-        print('sssssssss$subjectsList');
+
         return Success(subjectsList);
       } else {
         return Failure(responseData['message'] ?? 'Server Error');
@@ -262,12 +263,12 @@ class ApiService {
 
       final token =
           await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
-      print('tokeeeeen is $token');
+
 
       // 🔍 Check if token is expired
 
       Uri url =
-          Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getIngleSubjectsApi);
+          Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getSingleSubjectsApi);
 
       var response = await http.get(
         url,
@@ -278,8 +279,7 @@ class ApiService {
         },
       ).timeout(const Duration(seconds: 10));
 
-      print("📌 API Response Code: ${response.statusCode}");
-      print("📌 API Response Body: ${response.body}");
+
 
       var responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -324,9 +324,6 @@ class ApiService {
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 10));
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
       var responseData = jsonDecode(response.body);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -340,6 +337,29 @@ class ApiService {
     }
   }
 
+  Future<LogoutResult> logout() async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getLogOutApi);
+      final response = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'token': ApiConstant.token
+      });
+      if (response.statusCode == 200) {
+        var logoutResponse = LogoutResponse.fromJson(jsonDecode(response.body));
+        return Success(logoutResponse);
+      } else {
+        return Failure(jsonDecode(response.body)['message'] ??
+            'Server Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      return Failure('Error: $e');
+    }
+  }
  //get all exams
   Future<GetAllExamsResult> getAllExams(String title, int numberOfQuestions, int duration) async {
     try {
@@ -350,9 +370,6 @@ class ApiService {
 
       final token =
           await CacheNetwork.getCacheData(key: "token") ?? ''; // Prevent null
-      print('tokeeeeen is $token');
-
-      // 🔍 Check if token is expired
 
       Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getAllExamsApi);
 
@@ -365,8 +382,6 @@ class ApiService {
         },
       ).timeout(const Duration(seconds: 10));
 
-      print("📌 API Response Code: ${response.statusCode}");
-      print("📌 API Response Body: ${response.body}");
 
       var responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -374,7 +389,7 @@ class ApiService {
             (responseData['exams'] as List)
                 .map((element) => GetAllExamsRequest.fromJson(element))
                 .toList();
-        print('sssssssss$examsList');
+
         return Success(examsList);
       } else {
         return Failure(responseData['message'] ?? 'Server Error');
@@ -388,8 +403,35 @@ class ApiService {
     }
   }
 
+  Future<UserInfoResult> getUserInfo() async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        return Failure('No Internet Connection');
+      }
 
 
+      Uri url = Uri.parse(ApiConstant.baseUrl + ApiEndPoint.getUserInfoApi);
+   final token = await CacheNetwork.getCacheData(key: 'token') ?? '';
+      final headers = {
+        'token': token,
+        'Accept': 'application/json',
+      };
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        var userInfoResponse = UserInfoDTO.fromJson(jsonDecode(response.body));
 
+        return Success(userInfoResponse);
+      } else if (response.statusCode == 401) {
+        return Failure(' Unauthorized - Please log in again.');
+      } else if (response.statusCode == 403) {
+        return Failure(' Forbidden - Access Denied.');
+      } else {
+        return Failure(jsonDecode(response.body)['message'] ?? ' Server Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      return Failure(' Error: $e');
+    }
+  }
 
 }

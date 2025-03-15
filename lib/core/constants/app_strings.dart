@@ -8,7 +8,7 @@ class AppStrings {
   static const String firstName = 'First name';
   static const String lastName = 'Last name';
   static const String passwordAppBar = 'Password';
-  static const String forgetPassword = 'forgetPassword';
+  static const String forgetPassword = 'forget Password';
   static const String password = 'Password';
   static const String phoneNumber = 'Phone number';
   static const String confirmPassword = 'Confirm password';
@@ -94,6 +94,10 @@ static const String pleaseEnterNewPassword = 'Please enter a new password';
   static const String enterVerificationCode = 'Please enter the verification code sent to your email address.';
   static const String enterValidCode = 'Please enter a valid 6-digit code.';
   static const String resendCode = 'Resend';
+  static const String exploreLabel = "Explore";
+  static const String resultLabel = "Result";
+  static const String profileLabel = "Profile";
+  static const String loggedOutSuccess = 'Logged out successfully';
 }
 class AppColors{
   static const Color lightBlue = Color(0xffEDEFF3);

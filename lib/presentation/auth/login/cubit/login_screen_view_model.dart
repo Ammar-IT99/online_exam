@@ -30,11 +30,15 @@ class LoginScreenViewModel extends Cubit<LoginState> {
         );
     switch (result) {
       case Success(data: final authEntity):
-      await CacheNetwork.insertToCache(key: 'token', value: authEntity.token??'');
+        String? token = authEntity.token??'';
+        await CacheNetwork.insertToCache(key: 'token', value: token);
+      ApiConstant.token = token;
+
         emit(SignInSuccessState(authResultEntity: authEntity));
         break;
       case Failure(message: final error):
         emit(SignInErrorState(error));
     }
   }
+
 }

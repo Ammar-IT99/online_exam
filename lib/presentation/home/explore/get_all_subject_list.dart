@@ -133,13 +133,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     BlocBuilder<GetAllSubjectsViewModel, GetAllSubjects>(
                       bloc: viewModel,
                       builder: (context, state) {
-                        print("Current State: $state"); 
+
+
                         if (state is GetAllSubjectsLoadingState) {
                           return const Center(
-                              child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(
+                                color: AppColors.blueBase,
+                              ));
                         } else if (state is GetAllSubjectsSuccessState) {
-                          print(
-                              "Subjects Loaded: ${state.getAllSubjectsEntity.length}");
+
                           return state.getAllSubjectsEntity.isEmpty
                               ? const Center(
                                   child: Text('No subjects available'))
@@ -170,6 +172,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ],
                 )
+
                 ),
           ));
         });

@@ -3,7 +3,9 @@ import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
 import '../../../data/api/api_result.dart';
+import '../../../data/models/response/get_log_out_response.dart';
 import '../../entity/forgot_password_entity.dart';
+import '../../entity/get_user_info_entity.dart';
 import '../../entity/reset_password_entity.dart';
 import 'package:online_exam/domain/entity/get_single_subjects_entity.dart';
 
@@ -35,4 +37,7 @@ abstract class AuthRepositoryContract {
   );
 
   Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title,int numberOfQuestions,int duration);
+  Future<ApiResult<LogoutResponse>> logOut(
+      );
+  Future<ApiResult<UserInfoEntity>> getUserInfo();
 }

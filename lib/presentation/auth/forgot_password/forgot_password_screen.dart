@@ -4,6 +4,7 @@ import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_cod
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/di.dart';
+import '../../utlis/custom_elevated_button.dart';
 import '../../utlis/dialog_utlis.dart';
 import 'cubit/forgot_password_view_model.dart';
 import 'cubit/states.dart';
@@ -110,11 +111,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       },
                     ),
                     const SizedBox(height: 15),
-                    ElevatedButton(onPressed: (){
-                      if (viewModel.formKey.currentState?.validate() ?? false) {
-                        viewModel.forgotPassword();
-                      }
-                    }, child: Text(AppStrings.continueText)),
+                    CustomElevatedButton(
+                        label: AppStrings.continueText,
+                        onTap: () {
+                          if (viewModel.formKey.currentState!.validate()) {
+                            viewModel.forgotPassword();
+                          }
+                    },),
 
                   ]
               ),

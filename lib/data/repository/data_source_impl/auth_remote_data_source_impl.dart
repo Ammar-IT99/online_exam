@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/get_log_out_response.dart';
 
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
@@ -9,9 +10,11 @@ import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
 
 import 'package:online_exam/domain/entity/get_single_subjects_entity.dart';
 
+import '../../../domain/entity/get_user_info_entity.dart';
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
 import '../../api/api_result.dart';
 import '../../api/api_service.dart';
+import '../../models/response/get_user_info_response_dto.dart';
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final ApiService apiService;
@@ -124,6 +127,30 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Failure(error);
     }
   }
+
+  @override
+  Future<ApiResult<LogoutResponse>> logOut()async {
+    final result = await apiService.logout();
+    switch (result) {
+      case Success(data: final response):
+        return Success(response.toLogoutResponse());
+      case Failure(message: final error):
+        return Failure(error);
+  }
+}
+@override
+  Future<ApiResult<UserInfoEntity>> getUserInfo() async {
+  final result = await apiService.getUserInfo();
+
+  switch (result) {
+    case Success(data: final response):
+      return Success(response.userInfoToEntity());
+    case Failure(message: final error):
+      return Failure(error);
+  }
+}
+
+
 
    @override
   Future<ApiResult<List<GetAllExamsRequest>>> getAllExams(String title,

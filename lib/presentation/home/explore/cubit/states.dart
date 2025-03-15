@@ -1,9 +1,7 @@
 
 import 'package:online_exam/data/models/request/get_all_exams_request.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
-import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
-import 'package:online_exam/domain/entity/get_all_subjects_entity.dart';
-import 'package:online_exam/domain/entity/subjects_entity.dart';
+
 
 //subjects
 sealed class GetAllSubjects {}
