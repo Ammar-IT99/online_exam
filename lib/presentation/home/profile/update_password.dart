@@ -10,8 +10,8 @@ import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import 'package:online_exam/presentation/utlis/dialog_utlis.dart';
 
-class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+class UpdatePassword extends StatelessWidget {
+  const UpdatePassword({super.key});
   static const String routeName = 'reset-password';
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class ResetPassword extends StatelessWidget {
                     SizedBox(
                       width: 16.w,
                     ),
-                    GestureDetector(onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),child: Icon(Icons.arrow_back_ios,color: AppColors.blueBase,),),
+                    GestureDetector(onTap: () => Navigator.pop(context),child: Icon(Icons.arrow_back_ios,color: AppColors.blueBase,),),
                     Text(
                       AppStrings.resetPassword,
                       style: TextStyle(

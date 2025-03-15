@@ -2,7 +2,7 @@
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
 import 'package:online_exam/data/models/response/get_all_subjects_dto.dart';
 import 'package:online_exam/data/models/response/get_single_subject_dto.dart';
-import 'package:online_exam/domain/entity/subjects_entity.dart';
+import 'package:online_exam/data/models/response/get_user_info_response_dto.dart';
 
 import '../models/response/Register_response_data_model.dart';
 import '../models/response/forgot_password_response_dto.dart';
@@ -16,7 +16,7 @@ sealed class ApiResult<T> {
 }
 
 // ✅ Success Case
-class Success<T> extends ApiResult<T> {
+ class Success<T> extends ApiResult<T> {
   final T data;
   const Success(this.data);
 }
@@ -35,3 +35,4 @@ typedef ResetPasswordResult = ApiResult<ResetPasswordResponseDto>;
 typedef GetAllSubjectsResult = ApiResult<List<GetAllSubjectsRequest>>;
 typedef GetSingleSubjectsResult = ApiResult<GetSingleSubjectDto>;
 typedef LogoutResult = ApiResult<LogoutResponse>;
+typedef UserInfoResult = ApiResult<UserInfoDTO>;

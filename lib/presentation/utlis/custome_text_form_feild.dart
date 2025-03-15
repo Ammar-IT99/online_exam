@@ -24,7 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       padding: EdgeInsets.only(right: 8.w,left: 8.w,bottom: 14.h,top: 14),
       child: TextFormField(
         controller: controller,
-        obscureText: isPassword,
+        obscureText: isPassword ,
         keyboardType: keyboardType,
         validator: validator,
         decoration: InputDecoration(

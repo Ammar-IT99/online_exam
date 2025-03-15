@@ -4,7 +4,7 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/presentation/utlis/custom_browse_by_subject.dart';
 
 class ExploreScreen extends StatelessWidget {
-  ExploreScreen({super.key}); // 🔹 إزالة `const` لضمان إعادة البناء عند الحاجة
+  ExploreScreen({super.key});
 
   final TextEditingController searchController = TextEditingController();
 

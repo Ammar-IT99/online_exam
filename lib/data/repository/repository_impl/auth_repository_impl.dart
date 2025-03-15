@@ -6,6 +6,7 @@ import 'package:online_exam/data/models/response/get_log_out_response.dart';
 
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
+import 'package:online_exam/domain/entity/get_user_info_entity.dart';
 import 'package:online_exam/domain/entity/reset_password_entity.dart';
 import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
 
@@ -34,10 +35,10 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
     return remoteDataSource.signIn(
         email, password,);
   }
-  //forgotPassword
+  //forgot_password
   @override
   Future<ApiResult<ForgotPasswordEntity>> forgotPassword(String email) {
-    // TODO: implement forgotPassword
+    // TODO: implement forgot_password
    return remoteDataSource.forgotPassword(email);
   }
 
@@ -55,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   //getAllSubjects
   @override
   Future<ApiResult<List<GetAllSubjectsRequest>>> getAllSubjects(String name, String icon) {
-    // TODO: implement forgotPassword
+    // TODO: implement forgot_password
    return remoteDataSource.getAllSubjects(name,icon);
   }
 
@@ -69,6 +70,11 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   Future<ApiResult<LogoutResponse>> logOut() {
     return remoteDataSource.logOut();
 
+  }
+
+  @override
+  Future<ApiResult<UserInfoEntity>> getUserInfo() {
+    return remoteDataSource.getUserInfo();
   }
 
 }

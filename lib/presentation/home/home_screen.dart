@@ -4,7 +4,6 @@ import 'package:online_exam/presentation/home/explore/get_all_subject_list.dart'
 import 'package:online_exam/presentation/home/profile/profile_screen.dart';
 import 'package:online_exam/presentation/home/result/result_screen.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const String routeName = 'Home Screen';
@@ -38,66 +37,68 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBarTheme(
-  data: NavigationBarThemeData(
-    labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
-      (Set<WidgetState> states) {
-        if (states.contains(WidgetState.selected)) {
-          return TextStyle(
-            fontWeight: FontWeight.w500,
-            color: AppColors.blueBase, // Selected label color
-          );
-        }
-        return TextStyle(
-          fontWeight: FontWeight.w500,
-          color: AppColors.blackOverThirty, // Unselected label color
-        );
-      },
-    ),
-  ),child: NavigationBar(
-        selectedIndex: currentScreen,
-        backgroundColor: AppColors.lightBlue,
-        onDestinationSelected: (value) {
-          setState(() {
-            currentScreen = value;
-          });
-          controller.jumpToPage(currentScreen);
-        },
-        destinations: [
-          NavigationDestination(
-            icon: ImageIcon(
-              color: currentScreen == 0
-                  ? AppColors.blueBase
-                  : AppColors.blackOverThirty,
-              AssetImage(
-                AppStrings.exploreIcon,
-              ),
-            ),
-            label: 'Explore',
+        data: NavigationBarThemeData(
+          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+                (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.blueBase, // Selected label color
+                );
+              }
+              return TextStyle(
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackOverThirty, // Unselected label color
+              );
+            },
           ),
-          NavigationDestination(
-            icon: ImageIcon(
-              color: currentScreen == 1
-                  ? AppColors.blueBase
-                  : AppColors.blackOverThirty,
-              AssetImage(
-                AppStrings.resultIcon,
+        ),
+        child: NavigationBar(
+          selectedIndex: currentScreen,
+          backgroundColor: AppColors.lightBlue,
+          onDestinationSelected: (value) {
+            setState(() {
+              currentScreen = value;
+            });
+            controller.jumpToPage(currentScreen);
+          },
+          destinations: [
+            NavigationDestination(
+              icon: ImageIcon(
+                color: currentScreen == 0
+                    ? AppColors.blueBase
+                    : AppColors.blackOverThirty,
+                AssetImage(
+                  AppStrings.exploreIcon,
+                ),
               ),
+              label: AppStrings.exploreLabel,
             ),
-            label: 'Result',
-          ),
-          NavigationDestination(
-            icon: ImageIcon(
-              color: currentScreen == 2
-                  ? AppColors.blueBase
-                  : AppColors.blackOverThirty,
-              AssetImage(
-                AppStrings.profileIcon,
+            NavigationDestination(
+              icon: ImageIcon(
+                color: currentScreen == 1
+                    ? AppColors.blueBase
+                    : AppColors.blackOverThirty,
+                AssetImage(
+                  AppStrings.resultIcon,
+                ),
               ),
+              label: AppStrings.resultLabel,
             ),
-            label: 'Profile',
-          ),
-        ],
+            NavigationDestination(
+              icon: ImageIcon(
+                color: currentScreen == 2
+                    ? AppColors.blueBase
+                    : AppColors.blackOverThirty,
+                AssetImage(
+                  AppStrings.profileIcon,
+                ),
+              ),
+              label: AppStrings.profileLabel,
+            ),
+          ],
+        ),
       ),
-    ),);
+    );
   }
 }

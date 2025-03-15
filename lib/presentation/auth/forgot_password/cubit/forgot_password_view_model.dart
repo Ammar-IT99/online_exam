@@ -1,11 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:online_exam/presentation/auth/forgotPassword/cubit/states.dart';
+import 'package:online_exam/presentation/auth/forgot_password/cubit/states.dart';
 import '../../../../data/api/api_result.dart';
 import '../../../../domain/use_case/forgot_password_use_case.dart';
 @injectable
-
 class ForgotPasswordViewModel extends Cubit<ForgotState> {
   final ForgotPasswordUseCase forgotPasswordUseCase;
 

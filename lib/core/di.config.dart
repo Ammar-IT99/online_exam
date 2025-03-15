@@ -23,22 +23,26 @@ import '../domain/repository/repository_contract/auth_repository_contract.dart'
 import '../domain/use_case/forgot_password_use_case.dart' as _i755;
 import '../domain/use_case/get_all_subjects_use_case.dart' as _i805;
 import '../domain/use_case/get_single_subject_use_case.dart' as _i2;
+import '../domain/use_case/get_user_info_use_case.dart' as _i78;
 import '../domain/use_case/logout_use_case.dart' as _i235;
 import '../domain/use_case/register_use_case.dart' as _i224;
 import '../domain/use_case/reset_password_use_case.dart' as _i276;
 import '../domain/use_case/signin_use_case.dart' as _i435;
 import '../domain/use_case/verify_reset_code_use_case.dart' as _i353;
-import '../presentation/auth/forgotPassword/cubit/forgot_password_view_model.dart'
-    as _i1035;
+import '../presentation/auth/forgot_password/cubit/forgot_password_view_model.dart'
+    as _i530;
 import '../presentation/auth/log_out_cubit/log_out_cubit.dart' as _i647;
-import '../presentation/auth/login/cubit/login_screen_view_model.dart';
-import '../presentation/auth/register/cubit/register_screen_view_model.dart';
+import '../presentation/auth/login/cubit/login_screen_view_model.dart' as _i703;
+import '../presentation/auth/register/cubit/register_screen_view_model.dart'
+    as _i265;
 import '../presentation/auth/reset_password/cubit/reset_password_view_model.dart'
     as _i867;
 import '../presentation/auth/verify_reset_code/cubit/verify_reset_code_view_model.dart'
     as _i319;
 import '../presentation/home/explore/cubit/get_all_subjects_view_model.dart'
     as _i570;
+import '../presentation/home/profile/cubit/profile_screen_view_model.dart'
+    as _i380;
 import '../presentation/home/profile/profile_screen.dart' as _i54;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -77,18 +81,23 @@ extension GetItInjectableX on _i174.GetIt {
         authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
     gh.lazySingleton<_i235.LogOutUseCase>(() => _i235.LogOutUseCase(
         authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
-    gh.factory<LoginScreenViewModel>(
-        () => LoginScreenViewModel(signInUseCase: gh<_i435.SignInUseCase>()));
+    gh.lazySingleton<_i78.GetUserInfoUseCase>(() => _i78.GetUserInfoUseCase(
+        authRepositoryContract: gh<_i235.AuthRepositoryContract>()));
+    gh.factory<_i380.ProfileViewModel>(() => _i380.ProfileViewModel(
+        getUserInfoUseCase: gh<_i78.GetUserInfoUseCase>()));
+    gh.factory<_i703.LoginScreenViewModel>(() =>
+        _i703.LoginScreenViewModel(signInUseCase: gh<_i435.SignInUseCase>()));
     gh.lazySingleton<_i353.VerifyResetCodeUseCase>(
         () => _i353.VerifyResetCodeUseCase(gh<_i235.AuthRepositoryContract>()));
     gh.factory<_i570.GetAllSubjectsViewModel>(() =>
         _i570.GetAllSubjectsViewModel(
             getAllSubjectsUseCase: gh<_i805.GetAllSubjectsUseCase>()));
-    gh.factory<_i1035.ForgotPasswordViewModel>(() =>
-        _i1035.ForgotPasswordViewModel(
+    gh.factory<_i530.ForgotPasswordViewModel>(() =>
+        _i530.ForgotPasswordViewModel(
             forgotPasswordUseCase: gh<_i755.ForgotPasswordUseCase>()));
-    gh.factory<RegisterScreenViewModel>(() =>
-        RegisterScreenViewModel(registerUseCase: gh<_i224.RegisterUseCase>()));
+    gh.factory<_i265.RegisterScreenViewModel>(() =>
+        _i265.RegisterScreenViewModel(
+            registerUseCase: gh<_i224.RegisterUseCase>()));
     gh.factory<_i867.ResetPasswordViewModel>(
         () => _i867.ResetPasswordViewModel(gh<_i276.ResetPasswordUseCase>()));
     gh.factory<_i647.LogOutCubit>(
