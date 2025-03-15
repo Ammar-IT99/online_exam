@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/core/di.dart';
+import 'package:online_exam/data/api/api_service.dart';
+import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/cubit/states.dart';
-import 'package:online_exam/presentation/home/home_screen.dart';
-import 'package:online_exam/presentation/home/reset_password.dart';
+
+import 'package:online_exam/presentation/home/profile/update_password.dart';
+import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import 'package:online_exam/presentation/utlis/dialog_utlis.dart';
 
+import '../../auth/log_out_cubit/log_out_cubit.dart';
+import '../home_screen.dart';
+@injectable
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
   static const String routeName = 'profile-screen';
+
   @override
   Widget build(BuildContext context) {
     final RegisterScreenViewModel viewModel = getIt<RegisterScreenViewModel>();
+   final LogOutCubit viewModelLogOutCubit = getIt<LogOutCubit>();
     return BlocListener<RegisterScreenViewModel, RegisterState>(
       bloc: viewModel,
       listener: (context, state) {
@@ -26,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
           DialogUtils.showMessageDialog(
             context,
             message:
-                "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
+            "${AppStrings.registerSuccess}, ${state.authResultEntity.userEntity?.username}",
             posButtonTitle: AppStrings.ok,
             posButtonAction: () {},
           );
@@ -35,27 +45,23 @@ class ProfileScreen extends StatelessWidget {
           DialogUtils.showMessageDialog(
             context,
             message:
-                '${AppStrings.registerError}, ${state.errorMessage}\n${AppStrings.pleaseTryAgain}',
+            '${AppStrings.registerError}, ${state.errorMessage}\n${AppStrings.pleaseTryAgain}',
             posButtonTitle: AppStrings.ok,
           );
         }
       },
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.only(
-            top: 46.h,
-          ),
+          padding: EdgeInsets.only(top: 46.h),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Row(
+
                   children: [
-                    SizedBox(
-                      width: 16.w,
-                    ),
+                    SizedBox(width: 16.w),
                     GestureDetector(
-                      onTap: () =>
-                          Navigator.pushNamed(context, HomeScreen.routeName),
+                      onTap: () => Navigator.pushNamed(context, HomeScreen.routeName),
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: AppColors.blueBase,
@@ -68,11 +74,21 @@ class ProfileScreen extends StatelessWidget {
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w500),
                     ),
+                    SizedBox(width: 220.w),
+                    IconButton(
+                      onPressed: () {
+                        viewModelLogOutCubit.logOut();
+                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (route) => false);
+
+                      },
+                      icon: Icon(
+                      Icons.logout,
+                      color: AppColors.red,
+                        )
+                    )
                   ],
                 ),
-                SizedBox(
-                  height: 24.h,
-                ),
+                SizedBox(height: 24.h),
                 Center(
                   child: Stack(
                     children: [
@@ -83,9 +99,7 @@ class ProfileScreen extends StatelessWidget {
                       Positioned(
                         bottom: 0.h,
                         right: 0.w,
-                        child: Image.asset(
-                          AppStrings.camera,
-                        ),
+                        child: Image.asset(AppStrings.camera),
                       ),
                     ],
                   ),
@@ -124,15 +138,6 @@ class ProfileScreen extends StatelessWidget {
                   label: AppStrings.email,
                   keyboardType: TextInputType.emailAddress,
                   controller: viewModel.emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppStrings.enterYourEmail;
-                    }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return AppStrings.emailError;
-                    }
-                    return null;
-                  },
                 ),
                 CustomTextFormField(
                   label: AppStrings.password,
@@ -151,51 +156,19 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppStrings.enterYourPassword;
-                    }
-                    if (!RegExp(
-                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
-                        .hasMatch(value)) {
-                      return AppStrings.passwordError;
-                    }
-                    return null;
-                  },
                 ),
                 CustomTextFormField(
                   label: AppStrings.phoneNumber,
                   keyboardType: TextInputType.phone,
                   controller: viewModel.phoneNumberController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppStrings.enterYourPhoneNumber;
-                    }
-                    if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value)) {
-                      return AppStrings.phoneNumberError;
-                    }
-                    return null;
-                  },
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 340.w,
-                    height: 55.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100.r),
-                        ),
-                        color: AppColors.blueBase),
-                    child: Center(
-                      child: Text(
-                        AppStrings.update,
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ),
-                    ),
+                Padding(
+                  padding: EdgeInsets.all(12.r),
+                  child: CustomElevatedButton(
+                    label: AppStrings.update,
+                    onTap: () {},
+                    borderColor: AppColors.blackOverThirty,
+                    backgroundColor: AppColors.blackOverThirty,
                   ),
                 ),
               ],

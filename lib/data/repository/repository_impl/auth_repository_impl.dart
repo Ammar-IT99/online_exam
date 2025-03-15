@@ -1,9 +1,17 @@
 
 import 'package:injectable/injectable.dart';
+
+import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/get_log_out_response.dart';
+
 import 'package:online_exam/domain/entity/auth_result_entity.dart';
 import 'package:online_exam/domain/entity/forgot_password_entity.dart';
 import 'package:online_exam/domain/entity/reset_password_entity.dart';
 import 'package:online_exam/domain/entity/verify_reset_code_entity.dart';
+
+
+import 'package:online_exam/domain/entity/get_single_subjects_entity.dart';
+
 
 
 import '../../../domain/repository/data_source/auth_remote_data_source.dart';
@@ -44,6 +52,23 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
 
   }
 
+  //getAllSubjects
+  @override
+  Future<ApiResult<List<GetAllSubjectsRequest>>> getAllSubjects(String name, String icon) {
+    // TODO: implement forgotPassword
+   return remoteDataSource.getAllSubjects(name,icon);
+  }
 
+  @override
+  Future<ApiResult<GetSingleSubjectsEntity>> getSingleSubjects(String message) {
+    // TODO: implement getSingleSubjects
+    return remoteDataSource.getSingleSubjects(message);
+  }
+
+  @override
+  Future<ApiResult<LogoutResponse>> logOut() {
+    return remoteDataSource.logOut();
+
+  }
 
 }

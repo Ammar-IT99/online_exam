@@ -7,7 +7,7 @@ class CustomBrowseBySubject extends StatelessWidget {
   final String subject;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(elevation: 8,child: Container(
       width: 343.w,
       height: 80.h,
       decoration: BoxDecoration(
@@ -22,7 +22,7 @@ class CustomBrowseBySubject extends StatelessWidget {
         padding: EdgeInsets.only(top: 16.h, bottom: 16.h, left: 24.w),
         child: Row(
           children: [
-            Image.asset(imagePath),
+            Image.network(imagePath),
             SizedBox(
               width: 8.w,
             ),
@@ -33,7 +33,7 @@ class CustomBrowseBySubject extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),);
 
   }
 }

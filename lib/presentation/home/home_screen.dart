@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
-import 'package:online_exam/presentation/home/explore_screen.dart';
-import 'package:online_exam/presentation/home/profile_screen.dart';
-import 'package:online_exam/presentation/home/result_screen.dart';
+import 'package:online_exam/presentation/home/explore/get_all_subject_list.dart';
+import 'package:online_exam/presentation/home/profile/profile_screen.dart';
+import 'package:online_exam/presentation/home/result/result_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screens = [
     ExploreScreen(),
     ResultScreen(),
-    ProfileScreen(),
+    ProfileScreen(key: UniqueKey(),),
   ];
   @override
   void initState() {

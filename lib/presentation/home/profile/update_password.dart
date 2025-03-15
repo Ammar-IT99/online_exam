@@ -5,7 +5,8 @@ import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/core/di.dart';
 import 'package:online_exam/presentation/auth/register/cubit/register_screen_view_model.dart';
 import 'package:online_exam/presentation/auth/register/cubit/states.dart';
-import 'package:online_exam/presentation/home/profile_screen.dart';
+import 'package:online_exam/presentation/home/profile/profile_screen.dart';
+import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 import 'package:online_exam/presentation/utlis/custome_text_form_feild.dart';
 import 'package:online_exam/presentation/utlis/dialog_utlis.dart';
 
@@ -97,7 +98,7 @@ class ResetPassword extends StatelessWidget {
                         },
                 ),
                 CustomTextFormField(
-                  label: AppStrings.pleaseConfirmPassword,
+                  label: AppStrings.confirmPassword,
                   controller: confirmPasswordController,
                   validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -111,27 +112,32 @@ class ResetPassword extends StatelessWidget {
                           return null;
                         },
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 340.w,
-                    height: 55.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100.r),
-                        ),
-                        color: AppColors.blueBase),
-                    child: Center(
-                      child: Text(
-                        AppStrings.update,
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
+                SizedBox(height: 10.h,),
+                CustomElevatedButton(label: AppStrings.update, onTap:
+                () {},
+
+                )
+                // GestureDetector(
+                //   onTap: () {},
+                //   child: Container(
+                //     width: 340.w,
+                //     height: 55.h,
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.all(
+                //           Radius.circular(100.r),
+                //         ),
+                //         color: AppColors.blueBase),
+                //     child: Center(
+                //       child: Text(
+                //         AppStrings.update,
+                //         style: TextStyle(
+                //             fontSize: 16.sp,
+                //             fontWeight: FontWeight.w500,
+                //             color: Colors.white),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

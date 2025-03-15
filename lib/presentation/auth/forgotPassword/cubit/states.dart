@@ -1,4 +1,5 @@
-import '../../../domain/entity/forgot_password_entity.dart';
+import '../../../../domain/entity/forgot_password_entity.dart';
+
 
 sealed class ForgotState {}
 

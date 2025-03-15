@@ -6,9 +6,10 @@ import 'package:online_exam/presentation/auth/login/cubit/login_screen_view_mode
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import 'package:online_exam/presentation/home/home_screen.dart';
 import '../../../core/di.dart';
-import '../../forgotPassword/forgot_password_screen.dart';
+import '../../utlis/custom_elevated_button.dart';
 import '../../utlis/custome_text_form_feild.dart';
 import '../../utlis/dialog_utlis.dart';
+import '../forgotPassword/forgot_password_screen.dart';
 import 'cubit/states.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -91,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(AppStrings.login),
+          backgroundColor: AppColors.blueBase,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -127,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Checkbox(
                           value: rememberMe,
+                          activeColor: AppColors.blueBase,
                           onChanged: (value) {
                             setState(() {
                               rememberMe = value ?? false;
@@ -153,14 +156,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
+                CustomElevatedButton(
+                  label: AppStrings.login,
+                  onTap: () {
                     if (viewModel.formKey.currentState!.validate()) {
                       _saveRememberMe();
                       viewModel.signIn();
                     }
                   },
-                  child: const Text(AppStrings.login),
+
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
