@@ -2,20 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/data/models/request/get_all_subjects_request.dart';
+import 'package:online_exam/data/models/response/exam.dart';
 import 'package:online_exam/domain/entity/subjects_entity.dart';
 import 'package:online_exam/presentation/home/explore/exam_screen.dart';
+import 'package:online_exam/presentation/home/explore/quiz_screen.dart';
 import 'package:online_exam/presentation/utlis/custom_elevated_button.dart';
 
 class StartExamScreen extends StatefulWidget {
-  const StartExamScreen({
+  StartExamScreen({
     super.key,
+    this.exam,
   });
+   Exam? exam;
   static const String routeName = 'start-exam-screen';
   @override
   State<StartExamScreen> createState() => _StartExamScreenState();
 }
 
 class _StartExamScreenState extends State<StartExamScreen> {
+ 
   SubjectsEntity? subjectsEntity;
   @override
   Widget build(BuildContext context) {
@@ -137,9 +142,11 @@ class _StartExamScreenState extends State<StartExamScreen> {
             SizedBox(
               height: 48.h,
             ),
-            CustomElevatedButton(
+           CustomElevatedButton(
               label: AppStrings.start,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, QuizScreen.routeName,arguments: Exam(id: widget.exam?.id??''),);
+              },
               backgroundColor: AppColors.blueBase,
               textStyle: TextStyle(
                   color: Colors.white,

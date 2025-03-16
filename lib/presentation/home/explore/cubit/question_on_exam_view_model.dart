@@ -16,7 +16,6 @@ class Question0nexamCubit extends Cubit<Question0nexamState> {
 
   Future<void> getQuestion({required String examID})async{
     emit(QuestionOnExamLoadingState());
-    print("🚀 Forget Password Request Started...");
 
     var result=await questionOnexamUsecase.call(examID: examID);
     switch (result) {

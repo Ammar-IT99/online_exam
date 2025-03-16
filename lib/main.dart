@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/core/cache_network.dart';
 import 'package:online_exam/core/constants/app_strings.dart';
 import 'package:online_exam/data/api/api_constant.dart';
+import 'package:online_exam/data/api/api_service.dart';
+import 'package:online_exam/data/models/response/exam.dart';
+import 'package:online_exam/data/repository/data_source_impl/auth_remote_data_source_impl.dart';
+import 'package:online_exam/data/repository/repository_impl/auth_repository_impl.dart';
+import 'package:online_exam/domain/repository/data_source/auth_remote_data_source.dart';
+import 'package:online_exam/domain/repository/repository_contract/auth_repository_contract.dart';
+import 'package:online_exam/domain/use_case/question_on_exam_use_case.dart';
 import 'package:online_exam/presentation/auth/forgotPassword/forgot_password_screen.dart';
 import 'package:online_exam/presentation/auth/login/login_screen.dart';
 import 'package:online_exam/presentation/auth/register/register_screen.dart';
 import 'package:online_exam/presentation/auth/reset_password/reset_password_screen.dart';
 import 'package:online_exam/presentation/auth/verify_reset_code/verify_reset_code_screen.dart';
+import 'package:online_exam/presentation/home/explore/cubit/question_on_exam_view_model.dart';
 import 'package:online_exam/presentation/home/explore/exam_screen.dart';
+import 'package:online_exam/presentation/home/explore/quiz_screen.dart';
 import 'package:online_exam/presentation/home/explore/start_exam_screen.dart';
 import 'package:online_exam/presentation/home/result/result_screen.dart';
 import 'core/di.dart';
@@ -25,7 +35,16 @@ void main() async {
   ApiConstant.token = token ?? '';
 
 
-  runApp( MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<Question0nexamCubit>(
+          create: (context) => Question0nexamCubit(QuestionOnexamUsecase(AuthRepositoryImpl(remoteDataSource: AuthRemoteDataSourceImpl(apiService: ApiService())))),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 
 }
 
@@ -59,6 +78,7 @@ class MyApp extends StatelessWidget {
             ExamScreen.routeName: (context) => ExamScreen(),
             StartExamScreen.routeName: (context) => StartExamScreen(),
             ResultScreen.routeName: (context) => ResultScreen(),
+            QuizScreen.routeName: (context) => QuizScreen(exam: Exam(),examID: Exam().id??'',)
           },
         );
       },
